@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:visibility="visible">
+
+    <TextView
+        android:id="@+id/layout_courseitem_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/layout_courseitem_coursetitle"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Course Name" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_start"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Start Date:"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_title"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_title" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="End Date:"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_start"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_start" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Status:"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_end"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_end" />
+
+    <ImageButton
+        android:id="@+id/layout_courseitem_buttonedit"
+        android:layout_width="67dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/layout_assessment_edit_button_desc"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_courseitem_buttondelete"
+        app:layout_constraintEnd_toStartOf="@+id/layout_courseitem_buttondelete"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <ImageButton
+        android:id="@+id/layout_courseitem_buttondelete"
+        android:layout_width="59dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/layout_assessment_delete_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_title"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_tvstart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/layout_courseitem_startdate"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_start"
+        app:layout_constraintStart_toEndOf="@+id/layout_courseitem_start"
+        tools:text="start date" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_tvend"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/layout_courseitem_enddate"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_end"
+        app:layout_constraintStart_toEndOf="@+id/layout_courseitem_end"
+        tools:text="end date" />
+
+    <Spinner
+        android:id="@+id/layout_courseitem_statusspinner"
+        android:layout_width="0dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_courseitem_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/layout_courseitem_status" />
+
+    <android.support.design.widget.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView14">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/layout_courseitem_noteTI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="filler text dummy filler" />
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Course Notes:"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_status"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_statusspinner" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">CurriculumTracker</string>
+    <string name="layout_assessmentitem_title" />
+    <string name="layout_assessmentitem_desc" />
+    <string name="layout_assessment_edit_button_desc" />
+    <string name="layout_assessment_delete_button" />
+    <string name="layout_assessment_date" />
+    <string name="layout_courseitem_coursetitle" />
+    <string name="layout_courseitem_startdate" />
+    <string name="layout_courseitem_enddate" />
+    <string name="layout_courseitem_status" />
+    <string name="layout_termitem_title" />
+    <string name="layout_termitem" />
+    <string name="layout_termitem_start" />
+    <string name="layout_termitem_end" />
+    <string name="layout_termitem_desc" />
+    <string name="layout_assessmentnameTV" />
+    <string name="layout_termname" />
+    <string name="layout_assessmentitem_type" />
+    <string name="layout_assessmentitem_type_select" />
+    <string name="layout_assessmentitem_addnoteTV">Add a Note</string>
+    <string name="activity_terms_viewmore">Select a term to view more details and make changes</string>
+    <string name="activity_assessments_viewmore">Select an assessment to edit or view assessment details</string>
+    <string name="activity_assessments_addAsmtBtn">Add a new assessment</string>
+    <string name="activity_terms_AddTermBtn">Add a new term</string>
+    <string name="title_activity_addterm">AddtermActivity</string>
+    <string name="title_activity_add_asmt">AddAsmtActivity</string>
+    <string name="title_activity_courses">CoursesActivity</string>
+    <string name="layout_note_title">Note Title</string>
+    <string name="layout_note_textTV">Notes</string>
+    <string name="activity_courses_btnadd">ADD NEW COURSE</string>
+
+</resources>

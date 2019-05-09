@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:scrollbars="vertical">
+
+    <TextView
+        android:id="@+id/layout_termitem_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/layout_termitem_title"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Term Title" />
+
+    <ImageButton
+        android:id="@+id/layout_termitem_buttonedit"
+        android:layout_width="63dp"
+        android:layout_height="58dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/layout_assessment_edit_button_desc"
+        app:layout_constraintEnd_toStartOf="@+id/layout_termitem_buttondelete"
+        app:layout_constraintTop_toTopOf="@+id/layout_termitem_buttondelete"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <ImageButton
+        android:id="@+id/layout_termitem_buttondelete"
+        android:layout_width="60dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/layout_assessment_delete_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_termitem_title"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <TextView
+        android:id="@+id/layout_termitem_starttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Start Date:"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_termitem_title"
+        app:layout_constraintTop_toBottomOf="@+id/layout_termitem_title" />
+
+    <TextView
+        android:id="@+id/layout_termitem_endtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="End Date:"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_termitem_starttext"
+        app:layout_constraintTop_toBottomOf="@+id/layout_termitem_starttext" />
+
+    <TextView
+        android:id="@+id/layout_termitem_tvstart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/layout_termitem_start"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_termitem_starttext"
+        app:layout_constraintStart_toEndOf="@+id/layout_termitem_starttext"
+        tools:text="start date" />
+
+    <TextView
+        android:id="@+id/layout_termitem_tvend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/layout_termitem_end"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_termitem_endtext"
+        app:layout_constraintStart_toStartOf="@+id/layout_termitem_tvstart"
+        tools:text="end date" />
+
+
+</android.support.constraint.ConstraintLayout>
