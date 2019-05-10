@@ -31,8 +31,10 @@ public class TermsActivity extends AppCompatActivity implements LoaderManager.Lo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms);
-        String testTwo = getIntent().getStringExtra("noteRV");
-        Toast.makeText(getApplicationContext(), testTwo, Toast.LENGTH_SHORT).show();
+
+        //sample Toast and intent passing a String from main activity
+        /*String testTwo = getIntent().getStringExtra("noteRV");
+        Toast.makeText(getApplicationContext(), testTwo, Toast.LENGTH_SHORT).show();*/
 
         RecyclerView recyclerView = findViewById(R.id.activity_termlistRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -61,12 +63,10 @@ public class TermsActivity extends AppCompatActivity implements LoaderManager.Lo
                         null,
                         null,
                         null);
-
                 default:
                     throw new InvalidParameterException(TAG + ".onCreateLoader method called with invalid loader id");
 
         }
-
     }
 
     @Override

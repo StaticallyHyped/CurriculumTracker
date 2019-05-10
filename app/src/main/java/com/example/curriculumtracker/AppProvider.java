@@ -107,7 +107,6 @@ public class AppProvider extends ContentProvider {
         Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
-
         return cursor;
     }
 
@@ -154,8 +153,8 @@ public class AppProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert into: " + uri.toString());
                 }
                 break;
-                default:
-                    throw new IllegalArgumentException("Unknown uri " + uri);
+            default:
+                throw new IllegalArgumentException("Unknown uri " + uri);
         }
         if (recordId > 0){
             getContext().getContentResolver().notifyChange(uri, null); //updates Resolver if changes occur in db

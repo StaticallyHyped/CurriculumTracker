@@ -47,7 +47,6 @@ public class TermsCRVAdapter extends RecyclerView.Adapter<TermsCRVAdapter.TermVi
             holder.endDate.setText(mCursor.getString(mCursor.getColumnIndex(TermsContract.Columns.TERMS_ENDDATE)));
             holder.startDate.setText(mCursor.getString(mCursor.getColumnIndex(TermsContract.Columns.TERMS_STARTDATE)));
         }
-
     }
 
 

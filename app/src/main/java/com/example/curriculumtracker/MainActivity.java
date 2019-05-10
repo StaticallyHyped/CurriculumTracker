@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public void goToTermlist(View v) {
 
         Intent intent = new Intent(MainActivity.this, TermsActivity.class);
-        intent.putExtra("noteRV", "test");
+        //intent.putExtra("noteRV", "test");
 
         startActivity(intent);
 
