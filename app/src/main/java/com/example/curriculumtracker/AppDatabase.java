@@ -58,13 +58,15 @@ public class AppDatabase extends SQLiteOpenHelper {
         courseSQL = "CREATE TABLE " + CoursesContract.COURSES_TABLE_NAME + " ("
                 + CoursesContract.Columns._ID + " INTEGER PRIMARY KEY NOT NULL, "
                 + CoursesContract.Columns.COURSE_TITLE + " TEXT NOT NULL, "
-                + CoursesContract.Columns.COURSE_STATUS + " TEXT, "
                 + CoursesContract.Columns.COURSE_START + " TEXT, "
                 + CoursesContract.Columns.COURSE_END + " TEXT, "
+                + CoursesContract.Columns.COURSE_STATUS + " TEXT, "
                 + CoursesContract.Columns.COURSE_NOTE + " TEXT, "
                 + CoursesContract.Columns.COURSE_MENTOR_NAME + " TEXT, "
-                + CoursesContract.Columns.COURSE_MENTOR_EMAIL + " TEXT, "
-                + CoursesContract.Columns.COURSE_MENTOR_PHONE + " TEXT);";
+                + CoursesContract.Columns.COURSE_MENTOR_PHONE + " TEXT, "
+                + CoursesContract.Columns.COURSE_MENTOR_EMAIL + " TEXT);";
+
+
         Log.d(TAG, courseSQL);
         db.execSQL(courseSQL);
         Log.d(TAG, "onCreate: ends");

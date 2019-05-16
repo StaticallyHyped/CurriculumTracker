@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -32,7 +33,9 @@ public class AddtermActivity extends AppCompatActivity {
     private EditText title;
     private String startDate;
     private String endDate;
-
+    private long termId;
+    private String mTitle, mStart, mEnd, addTitle;
+    boolean bEdit;
 
     public AddtermActivity() {
         Log.d(TAG, "AddtermActivity: constructor called");
@@ -48,40 +51,22 @@ public class AddtermActivity extends AppCompatActivity {
         startCal = findViewById(R.id.activity_addterm_startcal);
         endCal = findViewById(R.id.activity_addterm_endcal);
         title = findViewById(R.id.activity_addterm_titleet);
+        bEdit = false;
+        getBooleanIntent();
 
-        Bundle arguments = savedInstanceState;
-
-
-//        Context context = getApplicationContext();
-//        term = (Term) arguments.getSerializable(Term.class.getSimpleName());
-//        term = (Term) context.getSerializable(Term.class.getSimpleName());
-        final Term term;
-
-        if (arguments != null) {
-            Log.d(TAG, "onCreate: arguments not null, found a term" );
-            term = (Term) arguments.getSerializable(Term.class.getSimpleName());
-
-            if (term != null) {
-                title.setText(term.getTitle());
-                mMode = AddOrEdit.EDIT;
-            } else {
-                Log.d(TAG, "onCreate: TERM NOT NULL, FRAGMENTEDITMODE?");
-                mMode = AddOrEdit.ADD;
-            }
-
+        if (bEdit) {
+            mMode = AddOrEdit.EDIT;
+            getIncomingIntent();
+            setStartCal();
+            setEndCal();
         } else {
-            Log.d(TAG, "onCreate: TERM WAS NULL, ENTER EDIT MODE");
-            term = null;
             mMode = AddOrEdit.ADD;
         }
+
         startCal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String startMonth = Integer.toString(month + 1);
-                String startDay = Integer.toString(dayOfMonth);
-                String startYear = Integer.toString(year);
-                startDate = (startMonth + 1) + "/" + startDay + "/" + startYear;
-                Log.d(TAG, "onSelectedDayChange: start date" + startDate);
+                startDate = (month +1) + "/" + dayOfMonth + "/" + year;
 
             }
         });
@@ -89,19 +74,18 @@ public class AddtermActivity extends AppCompatActivity {
         endCal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                endDate = month + "/" + dayOfMonth + "/" + year;
-                Log.d(TAG, "onSelectedDayChange: end date" + endDate);
+                endDate = (month +1) + "/" + dayOfMonth + "/" + year;
 
             }
         });
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        /*SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String startSimpleDate = sdf.format(new Date(startCal.getDate()));
         Log.d(TAG, "onCreate: start date in SDF:" + startSimpleDate);
 
         SimpleDateFormat endingSDF = new SimpleDateFormat("dd/MM/yyyy");
         String endSimpleDate = endingSDF.format(new Date(endCal.getDate()));
-        Log.d(TAG, "onCreate: end date in SDF:" + endSimpleDate);
+        Log.d(TAG, "onCreate: end date in SDF:" + endSimpleDate);*/
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,27 +97,27 @@ public class AddtermActivity extends AppCompatActivity {
 
                 switch (mMode) {
                     case EDIT:
-                        if (term == null){
-                            break;
-                        }
-                        if (!title.getText().toString().equals(term.getTitle())) {
+                        Log.d(TAG, "onClick: YOU'RE UPDATING/EDITING A TERM");
+                        if (!title.getText().toString().equals(mTitle)) {
                             values.put(TermsContract.Columns.TERMS_TITLE, title.getText().toString());
-                            Log.d(TAG, "onClick: title: " + title);
                         }
-                        if (!startDate.equals(term.getStart())){
+                        if (!startDate.equals(mStart)){
                             values.put(TermsContract.Columns.TERMS_STARTDATE, startDate);
                         }
-                        if (!endDate.equals(term.getEnd())){
+                        if (!endDate.equals(mEnd)){
                             values.put(TermsContract.Columns.TERMS_ENDDATE, endDate);
                         }
                         if (values.size() != 0){
-                            contentResolver.update(TermsContract.buildTermURI(term.getId()), values, null, null);
+                            contentResolver.update(TermsContract.buildTermURI(termId), values, null, null);
                             saveGoToTermsActivity(v);
                         }
 
+                        break;
                     case ADD:
+                        addTitle = title.getText().toString();
                         if (title.length() > 0) {
-                            values.put(TermsContract.Columns.TERMS_TITLE, title.getText().toString());
+                            Log.d(TAG, "onClick: YOU'RE ADDING A NEW TERM");
+                            values.put(TermsContract.Columns.TERMS_TITLE, addTitle);
                             values.put(TermsContract.Columns.TERMS_STARTDATE, startDate);
                             values.put(TermsContract.Columns.TERMS_ENDDATE, endDate);
                             contentResolver.insert(TermsContract.CONTENT_URI, values);
@@ -147,15 +131,70 @@ public class AddtermActivity extends AppCompatActivity {
             }
         });
     }
+    private void getIncomingIntent() {
+        String stringId = getIntent().getStringExtra("term_id");
+        termId = Long.parseLong(stringId);
+
+        if (getIntent().hasExtra("title")){
+            mTitle = getIntent().getStringExtra("title");
+            title.setText(mTitle);
+        }
+        if (getIntent().hasExtra("start")){
+            mStart = getIntent().getStringExtra("start");
+        }
+        if (getIntent().hasExtra("end")){
+            mEnd = getIntent().getStringExtra("end");
+        }
+
+    }
+
+    private void getBooleanIntent(){
+        if (getIntent().hasExtra("bEdit")){
+            bEdit = true;
+        }
+    }
 
     public void saveGoToTermsActivity(View v){
         Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
-        cancelBackToTermsActivity(v);
+        startActivity(new Intent(AddtermActivity.this, TermsActivity.class));
     }
 
     public void cancelBackToTermsActivity(View v){
         Toast.makeText(getApplicationContext(), "Process Cancelled", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(AddtermActivity.this, TermsActivity.class));
+
+    }
+
+    private void setStartCal(){
+        String date = mStart;
+        String parts [] = date.split("/");
+
+        int month = Integer.parseInt(parts[0]);
+        int day = Integer.parseInt(parts[1]);
+        int year = Integer.parseInt(parts[2]);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.MONTH, month -1);
+        calendar.set(Calendar.YEAR, year);
+        long timeInMillies = calendar.getTimeInMillis();
+        startCal.setDate(timeInMillies);
+    }
+
+    private void setEndCal(){
+        String date = mEnd;
+        String parts [] = date.split("/");
+
+        int month = Integer.parseInt(parts[0]);
+        int day = Integer.parseInt(parts[1]);
+        int year = Integer.parseInt(parts[2]);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.MONTH, month -1);
+        calendar.set(Calendar.YEAR, year);
+        long timeInMillies = calendar.getTimeInMillis();
+        endCal.setDate(timeInMillies);
 
     }
 

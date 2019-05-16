@@ -29,5 +29,7 @@
     <string name="layout_note_title">Note Title</string>
     <string name="layout_note_textTV">Notes</string>
     <string name="activity_courses_btnadd">ADD NEW COURSE</string>
+    <string name="title_activity_addcourse">AddcourseActivity</string>
+    <string name="title_activity_layout_courseitem">LayoutCourseitemActivity</string>
 
 </resources>

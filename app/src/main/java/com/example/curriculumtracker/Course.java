@@ -6,7 +6,6 @@ public class Course implements Serializable {
 
     private long mId;
     private String mTitle;
-    private String mType;
     private String mStart;
     private String mEnd;
     private String mStatus;
@@ -15,10 +14,10 @@ public class Course implements Serializable {
     private String mMentorPhone;
     private String mMentorEmail;
 
-    public Course(long mId, String mTitle, String mType, String mStart, String mEnd, String mStatus, String mNote, String mMentorName, String mMentorPhone, String mMentorEmail) {
+    public Course(long mId, String mTitle, String mStart, String mEnd, String mStatus, String mNote, String mMentorName, String mMentorPhone, String mMentorEmail) {
         this.mId = mId;
         this.mTitle = mTitle;
-        this.mType = mType;
+
         this.mStart = mStart;
         this.mEnd = mEnd;
         this.mStatus = mStatus;
@@ -44,13 +43,6 @@ public class Course implements Serializable {
         this.mTitle = mTitle;
     }
 
-    public String getType() {
-        return mType;
-    }
-
-    public void setType(String mType) {
-        this.mType = mType;
-    }
 
     public String getStart() {
         return mStart;
@@ -105,7 +97,6 @@ public class Course implements Serializable {
         return "Course{" +
                 "mId=" + mId +
                 ", mTitle='" + mTitle + '\'' +
-                ", mType='" + mType + '\'' +
                 ", mStart='" + mStart + '\'' +
                 ", mEnd='" + mEnd + '\'' +
                 ", mStatus='" + mStatus + '\'' +

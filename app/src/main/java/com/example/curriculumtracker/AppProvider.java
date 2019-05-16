@@ -153,10 +153,29 @@ public class AppProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert into: " + uri.toString());
                 }
                 break;
+            case COURSES:
+                db = mOpenHelper.getWritableDatabase();
+                recordId = db.insert(CoursesContract.COURSES_TABLE_NAME, null, values);
+                if (recordId >= 0 ){
+                    returnUri = CoursesContract.buildCourseURI(recordId);
+                } else {
+                    throw new android.database.SQLException("Failed to insert into: " + uri.toString());
+                }
+                break;
+            case ASMTS:
+                db = mOpenHelper.getWritableDatabase();
+                recordId = db.insert(AssessmentsContract.ASMTS_TABLE_NAME, null, values);
+                if (recordId >= 0 ){
+                    returnUri = AssessmentsContract.buildAssessmentsURI(recordId);
+                } else {
+                    throw new android.database.SQLException("Failed to insert into: " + uri.toString());
+                }
+                break;
             default:
                 throw new IllegalArgumentException("Unknown uri " + uri);
         }
-        if (recordId > 0){
+
+        if (recordId >= 0){
             getContext().getContentResolver().notifyChange(uri, null); //updates Resolver if changes occur in db
         }
         return returnUri;
@@ -164,7 +183,65 @@ public class AppProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        final int match = sUriMatcher.match(uri);
+        final SQLiteDatabase db;
+        int count;
+
+        String selectionCriteria;
+
+        switch(match) {
+            case TERMS:
+                db = mOpenHelper.getWritableDatabase();
+                count = db.delete(TermsContract.TERMS_TABLE_NAME, selection, selectionArgs);
+                break;
+            case TERMS_ID:
+                db = mOpenHelper.getWritableDatabase();
+                long termId = TermsContract.getTermId(uri);
+                selectionCriteria = TermsContract.Columns._ID + " = " + termId;
+
+                if((selection != null) && (selection.length() > 0)){
+                    selectionCriteria += " AND (" + selection + ")";
+                }
+                count = db.delete(TermsContract.TERMS_TABLE_NAME, selectionCriteria, selectionArgs);
+                break;
+
+            case COURSES:
+                db = mOpenHelper.getWritableDatabase();
+                count = db.delete(CoursesContract.COURSES_TABLE_NAME, selection, selectionArgs);
+                break;
+            case COURSES_ID:
+                db = mOpenHelper.getWritableDatabase();
+                long courseId = CoursesContract.getCourseId(uri);
+                selectionCriteria = CoursesContract.Columns._ID + " = " + courseId;
+
+                if((selection != null) && (selection.length() > 0)){
+                    selectionCriteria += " AND (" + selection + ")";
+                }
+                count = db.delete(CoursesContract.COURSES_TABLE_NAME, selectionCriteria, selectionArgs);
+                break;
+
+            case ASMTS:
+                db = mOpenHelper.getWritableDatabase();
+                count = db.delete(AssessmentsContract.ASMTS_TABLE_NAME, selection, selectionArgs);
+                break;
+            case ASMTS_ID:
+                db = mOpenHelper.getWritableDatabase();
+                long asmtId = AssessmentsContract.getAssessmentsId(uri);
+                selectionCriteria = AssessmentsContract.Columns._ID + " = " + asmtId;
+
+                if((selection != null) && (selection.length() > 0)){
+                    selectionCriteria += " AND (" + selection + ")";
+                }
+                count = db.delete(AssessmentsContract.ASMTS_TABLE_NAME, selectionCriteria, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown uri: " + uri);
+        }
+        if (count > 0){
+            getContext().getContentResolver().notifyChange(uri, null); //updates Resolver if changes occur in db
+        }
+        return count;
+
     }
 
     @Override
@@ -191,8 +268,38 @@ public class AppProvider extends ContentProvider {
                 }
                 count = db.update(TermsContract.TERMS_TABLE_NAME, values, selectionCriteria, selectionArgs);
                 break;
+
+            case COURSES:
+                db = mOpenHelper.getWritableDatabase();
+                count = db.update(CoursesContract.COURSES_TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case COURSES_ID:
+                db = mOpenHelper.getWritableDatabase();
+                long courseId = CoursesContract.getCourseId(uri);
+                selectionCriteria = CoursesContract.Columns._ID + " = " + courseId;
+
+                if((selection != null) && (selection.length() > 0)){
+                    selectionCriteria += " AND (" + selection + ")";
+                }
+                count = db.update(CoursesContract.COURSES_TABLE_NAME, values, selectionCriteria, selectionArgs);
+                break;
+
+            case ASMTS:
+                db = mOpenHelper.getWritableDatabase();
+                count = db.update(AssessmentsContract.ASMTS_TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case ASMTS_ID:
+                db = mOpenHelper.getWritableDatabase();
+                long asmtId = AssessmentsContract.getAssessmentsId(uri);
+                selectionCriteria = AssessmentsContract.Columns._ID + " = " + asmtId;
+
+                if((selection != null) && (selection.length() > 0)){
+                    selectionCriteria += " AND (" + selection + ")";
+                }
+                count = db.update(AssessmentsContract.ASMTS_TABLE_NAME, values, selectionCriteria, selectionArgs);
+                break;
             default:
-                throw new IllegalArgumentException("Uknown uri: " + uri);
+                throw new IllegalArgumentException("Unknown uri: " + uri);
         }
         if (count > 0){
             getContext().getContentResolver().notifyChange(uri, null); //updates Resolver if changes occur in db

@@ -35,7 +35,7 @@
 
     <CalendarView
         android:id="@+id/content_add_asmtCV"
-        android:layout_width="392dp"
+        android:layout_width="0dp"
         android:layout_height="304dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -60,70 +60,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:checkedButton="@+id/rbPA"
+        android:checkedButton="@+id/content_add_asmt_rbPA"
         app:layout_constraintStart_toEndOf="@+id/textView20"
         app:layout_constraintTop_toBottomOf="@+id/content_add_asmtText">
 
         <RadioButton
-            android:id="@+id/rbPA"
+            android:id="@+id/content_add_asmt_rbPA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Performance Assessment" />
 
         <RadioButton
-            android:id="@+id/rbOA"
+            android:id="@+id/content_add_asmt_rbOA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Objective Assessment" />
     </RadioGroup>
 
-    <TextView
-        android:id="@+id/textView21"
+    <Button
+        android:id="@+id/content_add_asmt_savebtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Add a note (optional)"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/content_add_asmtAddNote" />
-
-    <ImageButton
-        android:id="@+id/content_add_asmtAddNote"
-        style="@android:style/Widget.Holo.Light.ImageButton"
-        android:layout_width="64dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:tint="@color/colorAccent"
-        app:layout_constraintStart_toEndOf="@+id/textView21"
-        app:layout_constraintTop_toBottomOf="@+id/content_add_asmtCV"
-        app:srcCompat="@android:drawable/ic_menu_add" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/content_add_asmtRV"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content_add_asmtAddNote" />
+        android:text="SAVE"
+        app:layout_constraintEnd_toStartOf="@+id/content_add_asmt_cancelbtn"
+        app:layout_constraintTop_toBottomOf="@+id/content_add_asmtCV" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/content_add_asmtFAB"
+    <Button
+        android:id="@+id/content_add_asmt_cancelbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+        android:onClick="cancelBackToAsmtsActivity"
+        android:text="CANCEL"
+        app:layout_constraintBaseline_toBaselineOf="@+id/content_add_asmt_savebtn"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

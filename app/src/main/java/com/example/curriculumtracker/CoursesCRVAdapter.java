@@ -1,30 +1,36 @@
 package com.example.curriculumtracker;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CursorAdapter;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.CourseViewHolder> {
 
     public static final String TAG = "CoursesCRVAdapter";
-
+    private Context mContext;
     private Cursor mCursor;
 
-    public CoursesCRVAdapter(Cursor cursor){
-        this.mCursor = cursor;
-    }
 
+    public CoursesCRVAdapter(Cursor cursor, Context context){
+        this.mCursor = cursor;
+        this.mContext = context;
+        //this.mOnCourseListener = OnCourseListener;
+    }
+    
     @NonNull
     @Override
-    public CourseViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         Log.d(TAG, "onCreateViewHolder: starts");
 
         // make sure to use the LAYOUT for the item here, not the activity for the recyclerview
@@ -34,7 +40,22 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
     }
 
     @Override
-    public void onBindViewHolder(CourseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CourseViewHolder holder, final int position) {
+
+
+        holder.note.setVisibility(View.GONE);
+        holder.courseMentInfo.setVisibility(View.GONE);
+        holder.mentEmail.setVisibility(View.GONE);
+        holder.mentPhone.setVisibility(View.GONE);
+        holder.mentName.setVisibility(View.GONE);
+        holder.staticMentName.setVisibility(View.GONE);
+        holder.staticMentPhone.setVisibility(View.GONE);
+        holder.staticMentEmail.setVisibility(View.GONE);
+        holder.staticNoteTitle.setVisibility(View.GONE);
+        holder.editBtn.setVisibility(View.GONE);
+        holder.deleteBtn.setVisibility(View.GONE);
+
+
         Log.d(TAG, "onBindViewHolder: starts");
         //System.out.println("this is mCursor: " + mCursor.getCount());
         if((mCursor == null) || (mCursor.getCount() == 0)){
@@ -47,12 +68,63 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
             if(!mCursor.moveToPosition(position)){
                 throw new IllegalArgumentException("couldn't move cursor into position: " + position);
             }
-            System.out.println("ON BIND VIEW HOLDER" + CoursesContract.Columns.COURSE_START);
 
             holder.endText.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_START)));
             holder.startText.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_END)));
             holder.title.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_TITLE)));
             holder.note.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_NOTE)));
+            holder.status.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_STATUS)));
+            Log.d(TAG, "onClick: COLUMN INDEX NUMBER: " + mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns._ID)));
+
+            /*holder.note.setVisibility(View.GONE);
+            holder.courseMentInfo.setVisibility(View.GONE);
+            holder.mentEmail.setVisibility(View.GONE);
+            holder.mentPhone.setVisibility(View.GONE);
+            holder.mentName.setVisibility(View.GONE);
+            holder.staticMentName.setVisibility(View.GONE);
+            holder.staticMentPhone.setVisibility(View.GONE);
+            holder.staticMentEmail.setVisibility(View.GONE);
+            holder.staticNoteTitle.setVisibility(View.GONE);
+            holder.editBtn.setVisibility(View.GONE);
+            holder.deleteBtn.setVisibility(View.GONE);*/
+
+            holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onClick: THIS IS THE TRANSITION NAME: " + v.toString());
+                    //Log.d(TAG, "onClick: COLUMN INDEX NUMBER: " + mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns._ID)));
+                    Log.d(TAG, "onClick: starts");
+                    Log.d(TAG, "onClick: POSITION: " + position);
+                    Intent intent = new Intent(mContext, LayoutCourseitemActivity.class);
+                    mCursor.moveToPosition(position);
+                    intent.putExtra("course_id", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns._ID)));
+                    intent.putExtra("course_title", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_TITLE)));
+                    intent.putExtra("course_start", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_START)));
+                    intent.putExtra("course_end", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_END)));
+                    intent.putExtra("course_note", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_NOTE)));
+                    intent.putExtra("course_status", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_STATUS)));
+                    Log.d(TAG, "onClick: MADE IT TO MENTOR LINE");
+
+                    if (mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_MENTOR_NAME)) != null){
+                        Log.d(TAG, "onClick: ROW IS NOT NULL");
+                        intent.putExtra("course_mentname", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_MENTOR_NAME)));
+                    } else {
+                        Log.d(TAG, "onClick: ROW IS NOT NULL");
+                        intent.putExtra("course_mentname", "");
+                    }
+                    if (mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_MENTOR_EMAIL)) != null){
+                        intent.putExtra("course_mentemail", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_MENTOR_EMAIL)));
+                    }
+                    if (mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_MENTOR_PHONE)) != null){
+                        intent.putExtra("course_mentphone", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_MENTOR_PHONE)));
+                    }
+
+                    mContext.startActivity(intent);
+                    Log.d(TAG, "onClick: exits");
+                }
+            });
+
+            //holder.note.setVisibility(View.GONE);
             //holder.statusSpinner TODO set up code to fill in spinner values using table
         }
         Log.d(TAG, "onBindViewHolder: exits");
@@ -61,25 +133,24 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
     @Override
     public int getItemCount() { //This is actually really important. It returns how many items are returned in the
         //recyclerview. If you leave the default to 0, you will not get any info
-        Log.d(TAG, "getItemCount: starts");
         if((mCursor == null) || (mCursor.getCount() == 0)){
-            Log.d(TAG, "getItemCount: inside get item count: Item Count == 0 or null");
+            Log.d(TAG, "getItemCount: IS NULL IN getitemcount");
             return 1;
         } else {
-            Log.d(TAG, "getItemCount: in else: " + mCursor.getCount());
+            Log.d(TAG, "getItemCount: in else" + mCursor.getCount());
             return mCursor.getCount();
         }
-
     }
 
     Cursor swapCursor(Cursor newCursor){
-        Log.d(TAG, "swapCursor: starts");
+        Log.d(TAG, "swapCursor: cursor number:" + newCursor);
         if (newCursor == mCursor){
             return null;
         }
         final Cursor oldCursor = mCursor;
         mCursor = newCursor;
         if(newCursor != null) {
+            Log.d(TAG, "swapCursor: not null: cursor number: " + newCursor);
             notifyDataSetChanged();
         } else {
             notifyItemRangeRemoved(0, getItemCount());
@@ -87,35 +158,63 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
         return oldCursor;
     }
 
-    static class CourseViewHolder extends RecyclerView.ViewHolder {
-        private static final String TAG = "CourseViewHolder (subclass in CoursesCRVAdapter";
 
+    static class CourseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private static final String TAG = "CourseViewHolder (subclass in CoursesCRVAdapter";
+        //CoordinatorLayout parentLayout = null;
+        ConstraintLayout parentLayout = null;
         TextView title = null;
         TextView endTitle = null;
         TextView startTitle = null;
         TextView statusTitle = null;
         TextView endText = null;
         TextView startText = null;
-        Spinner statusSpinner = null;
+        TextView status = null;
         ImageButton editBtn = null;
         ImageButton deleteBtn = null;
-        TextInputEditText note = null;
+        TextView note = null;
+        TextView staticNoteTitle = null;
+        TextView courseMentInfo = null;
+        TextView staticMentName = null;
+        TextView staticMentPhone = null;
+        TextView staticMentEmail = null;
+        TextView mentName = null;
+        TextView mentEmail = null;
+        TextView mentPhone = null;
+        OnCourseListener mOnCourseListener;
 
         public CourseViewHolder(View itemView) {
             super(itemView);
             Log.d(TAG, "CourseViewHolder: starts");
-
+            this.parentLayout = itemView.findViewById(R.id.layout_courseitem_CL);
             this.title = itemView.findViewById(R.id.layout_courseitem_title);
             this.endTitle = itemView.findViewById(R.id.layout_courseitem_start);
             this.startTitle = itemView.findViewById(R.id.layout_courseitem_end);
-            this.statusTitle = itemView.findViewById(R.id.layout_courseitem_status);
+            this.statusTitle = itemView.findViewById(R.id.layout_courseitem_statusTV);
             this.endText = itemView.findViewById(R.id.layout_courseitem_tvend);
             this.startText = itemView.findViewById(R.id.layout_courseitem_tvstart);
-            this.statusSpinner = itemView.findViewById(R.id.layout_courseitem_statusspinner);
-            this.editBtn = itemView.findViewById(R.id.layout_courseitem_buttonedit);
-            this.deleteBtn = itemView.findViewById(R.id.layout_courseitem_buttondelete);
-            this.note = itemView.findViewById(R.id.layout_courseitem_noteTI);
+            this.status = itemView.findViewById(R.id.layout_courseitem_status);
+            this.editBtn = itemView.findViewById(R.id.layout_courseitem_Btnedit);
+            this.deleteBtn = itemView.findViewById(R.id.layout_courseitem_Btndelete);
+            this.note = itemView.findViewById(R.id.layout_courseitem_notecontentTV);
+            this.staticNoteTitle = itemView.findViewById(R.id.layout_courseitem_notesTV);
+            this.courseMentInfo = itemView.findViewById(R.id.layout_courseitem_mentinfo);
+            this.staticMentName = itemView.findViewById(R.id.layout_courseitem_staticmname);
+            this.staticMentEmail = itemView.findViewById(R.id.layout_courseitem_staticmemail);
+            this.staticMentPhone = itemView.findViewById(R.id.layout_courseitem_staticmphone);
+            this.mentName = itemView.findViewById(R.id.layout_courseitem_mentorname);
+            this.mentEmail = itemView.findViewById(R.id.layout_courseitem_mentoremail);
+            this.mentPhone = itemView.findViewById(R.id.layout_courseitem_mentorphone);
+//            mOnCourseListener = onCourseListener;
         }
 
+        @Override
+        public void onClick(View v) {
+            mOnCourseListener.onCourseClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnCourseListener {
+        void onCourseClick(int position);
     }
 }

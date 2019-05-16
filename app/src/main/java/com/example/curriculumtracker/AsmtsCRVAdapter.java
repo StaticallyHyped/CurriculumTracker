@@ -1,7 +1,10 @@
 package com.example.curriculumtracker;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,14 +15,13 @@ import android.widget.TextView;
 
 
 public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtViewHolder> {
-    // do I try to inflate a fragment or a view in my AsmtsCRVAdapter for my notesRV?
-    // can I include a loader in here? Do I need to?
     public static final String TAG = "AsmtsCRVAdapter";
     private Cursor mCursor;
+    private Context mContext;
 
-
-    public AsmtsCRVAdapter(Cursor cursor){
+    public AsmtsCRVAdapter(Cursor cursor, Context context){
         this.mCursor = cursor;
+        this.mContext = context;
 
     }
     @NonNull
@@ -31,7 +33,13 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
     }
 
     @Override
-    public void onBindViewHolder(AsmtViewHolder holder, int position) {
+    public void onBindViewHolder(final AsmtViewHolder holder, final int position) {
+        holder.editBtn.setVisibility(View.GONE);
+        holder.deleteBtn.setVisibility(View.GONE);
+        holder.title.setText("Assessment Title");
+        holder.staticDate.setText("Assessment Date");
+        holder.staticType.setText("Assessment Type");
+
         if ((mCursor == null) || (mCursor.getCount() == 0)){
             holder.title.setText("Assessment Title");
             holder.staticDate.setText("Assessment Date");
@@ -40,16 +48,27 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
             if (!mCursor.moveToPosition(position)){
                 throw new IllegalArgumentException("could not move cursor into position");
             }
-            holder.title.setText("Assessment Title");
-            holder.staticDate.setText("Assessment Date");
-            holder.staticType.setText("Assessment Type");
             System.out.println("ASSESSMENTS TYPE: " + AssessmentsContract.Columns.ASMTS_TYPE);
             holder.type.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TYPE)));
             holder.title.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TITLE)));
             holder.date.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_DATE)));
+
+            holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, LayoutAsmtItemActivity.class);
+
+                    mCursor.moveToPosition(position);
+                    intent.putExtra("asmt_id", mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns._ID)));
+                    intent.putExtra("asmt_title", mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TITLE)));
+                    intent.putExtra("asmt_date", mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_DATE)));
+                    intent.putExtra("asmt_type", mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TYPE)));
+
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -78,6 +97,7 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
 
     static class AsmtViewHolder extends RecyclerView.ViewHolder {
 
+        ConstraintLayout parentLayout;
         TextView title = null;
         TextView date = null;
         TextView staticDate = null;
@@ -96,6 +116,7 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
             this.deleteBtn = itemView.findViewById(R.id.layout_asmntitem_buttondelete);
             this.editBtn = itemView.findViewById(R.id.layout_asmntitem_buttonedit);
             this.type = itemView.findViewById(R.id.layout_assesmentitem_typeTV);
+            this.parentLayout = itemView.findViewById(R.id.layout_asmtitem_CL);
 
         }
     }

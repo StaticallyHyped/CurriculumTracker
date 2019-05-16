@@ -12,9 +12,17 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".LayoutCourseitemActivity"
+            android:label="@string/title_activity_layout_courseitem"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".AddcourseActivity"
+            android:label="@string/title_activity_addcourse"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".CoursesActivity"
             android:label="All Courses"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddAsmtActivity"
             android:label="Add an Assessment"
@@ -50,6 +58,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LayoutTermItemActivity" />
+        <activity android:name=".LayoutAsmtItemActivity" />
+
         <provider
             android:name=".AppProvider"
             android:authorities="com.example.curriculumtracker.provider"

@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_asmtitem_CL"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scrollbars="vertical">
@@ -15,7 +16,7 @@
         android:text="@string/layout_assessmentitem_title"
         android:textAlignment="viewStart"
         android:textColor="@color/colorPrimary"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,6 +44,7 @@
         android:layout_height="52dp"
         android:layout_marginEnd="8dp"
         android:contentDescription="@string/layout_assessment_edit_button_desc"
+        android:onClick="goToEditAssessment"
         app:layout_constraintEnd_toStartOf="@+id/layout_asmntitem_buttondelete"
         app:layout_constraintTop_toBottomOf="@+id/layout_asmntitem_title"
         app:srcCompat="@android:drawable/ic_menu_edit" />
@@ -53,6 +55,7 @@
         android:layout_height="52dp"
         android:layout_marginEnd="8dp"
         android:contentDescription="@string/layout_assessment_delete_button"
+        android:onClick="deleteAsmtItem"
         app:layout_constraintBottom_toBottomOf="@+id/layout_asmntitem_buttonedit"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_delete" />
@@ -86,38 +89,14 @@
         tools:text="OA" />
 
     <ImageButton
-        android:id="@+id/layout_assessmentitem_addnotebutton"
-        style="@style/Widget.AppCompat.ImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:tint="@color/colorAccent"
-        app:layout_constraintEnd_toStartOf="@+id/layout_assessmentitem_sharebutton"
-        app:layout_constraintTop_toBottomOf="@+id/layout_asmntitem_buttonedit"
-        app:srcCompat="@android:drawable/ic_menu_add" />
-
-    <ImageButton
         android:id="@+id/layout_assessmentitem_sharebutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:tint="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="@+id/layout_asmntitem_buttondelete"
         app:layout_constraintTop_toBottomOf="@+id/layout_asmntitem_buttondelete"
         app:srcCompat="@android:drawable/ic_menu_share" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/layout_assessmentitem_addnoteTV"
-        android:textColor="@color/colorAccent"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/layout_assessmentitem_addnotebutton"
-        app:layout_constraintTop_toTopOf="@+id/layout_assessmentitem_addnotebutton" />
 
     <TextView
         android:id="@+id/layout_assessmentitem_dateTV"

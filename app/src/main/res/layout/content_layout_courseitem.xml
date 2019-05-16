@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_courseitem_CL"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:visibility="visible"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".LayoutCourseitemActivity"
+    tools:showIn="@layout/layout_courseitem">
+
+    <TextView
+        android:id="@+id/layout_courseitem_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_statusTV"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_tvend" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_mentinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Course Mentor Information"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_notecontentTV" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/layout_courseitem_coursetitle"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Course Name" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_start"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Start Date:"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_title"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_title" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="End Date:"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_start"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_start" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_statusTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Status:"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_end"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_end" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_tvstart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/layout_courseitem_startdate"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_start"
+        app:layout_constraintStart_toEndOf="@+id/layout_courseitem_start"
+        tools:text="start date" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_tvend"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/layout_courseitem_enddate"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_end"
+        app:layout_constraintStart_toEndOf="@+id/layout_courseitem_end"
+        tools:text="end date" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_notesTV"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_notesTV" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_notesTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Course Notes:"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_statusTV"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_statusTV" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_notecontentTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_notesTV"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_notesTV"
+        tools:text="NOTES FILLER FILLER TEXT" />
+
+    <ImageButton
+        android:id="@+id/layout_courseitem_Btnedit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:onClick="goToEditCourse"
+        app:layout_constraintEnd_toStartOf="@+id/layout_courseitem_Btndelete"
+        app:layout_constraintTop_toTopOf="@+id/layout_courseitem_start"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <ImageButton
+        android:id="@+id/layout_courseitem_Btndelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:onClick="deleteCourseItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/layout_courseitem_Btnedit"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_mentoremail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_staticmemail"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_mentorphone" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_mentorphone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_staticmphone"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_mentorname" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_mentorname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="TextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_staticmname"
+        app:layout_constraintStart_toEndOf="@+id/layout_courseitem_staticmname" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_staticmemail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Mentor Email"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_staticmphone"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_staticmphone" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_staticmphone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Mentor Phone"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_staticmname"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_staticmname" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_staticmname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Mentor Name"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_mentinfo" />
+
+</android.support.constraint.ConstraintLayout>

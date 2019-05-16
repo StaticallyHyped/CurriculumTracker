@@ -23,7 +23,6 @@ public class TermsActivity extends AppCompatActivity implements LoaderManager.Lo
     public static final String TAG = "TermsActivity";
 
     public static final int LOADER_ID = 0;
-
     private TermsCRVAdapter mAdapter;
 
 
@@ -38,7 +37,7 @@ public class TermsActivity extends AppCompatActivity implements LoaderManager.Lo
 
         RecyclerView recyclerView = findViewById(R.id.activity_termlistRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new TermsCRVAdapter(null);
+        mAdapter = new TermsCRVAdapter(null, this);
         recyclerView.setAdapter(mAdapter);
         LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
 

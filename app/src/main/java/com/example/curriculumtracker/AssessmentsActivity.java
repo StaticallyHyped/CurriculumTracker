@@ -1,5 +1,6 @@
 package com.example.curriculumtracker;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 public class AssessmentsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -26,7 +28,7 @@ public class AssessmentsActivity extends AppCompatActivity implements LoaderMana
 
         RecyclerView recyclerView = findViewById(R.id.activity_assessmentsRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new AsmtsCRVAdapter(null);
+        mAdapter = new AsmtsCRVAdapter(null, this);
         recyclerView.setAdapter(mAdapter);
         LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
 
@@ -37,7 +39,7 @@ public class AssessmentsActivity extends AppCompatActivity implements LoaderMana
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle bundle) {
 
         Log.d(TAG, "onCreateLoader: starts");
-        String [] projection = {AssessmentsContract.Columns.ASMTS_TITLE, AssessmentsContract.Columns.ASMTS_TYPE,
+        String [] projection = {AssessmentsContract.Columns._ID, AssessmentsContract.Columns.ASMTS_TITLE, AssessmentsContract.Columns.ASMTS_TYPE,
         AssessmentsContract.Columns.ASMTS_DATE};
 
         switch(id) {
@@ -65,5 +67,9 @@ public class AssessmentsActivity extends AppCompatActivity implements LoaderMana
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         Log.d(TAG, "onLoaderReset: starts");
+    }
+
+    public void goToAddAsmts(View view){
+        startActivity(new Intent(AssessmentsActivity.this, AddAsmtActivity.class));
     }
 }
