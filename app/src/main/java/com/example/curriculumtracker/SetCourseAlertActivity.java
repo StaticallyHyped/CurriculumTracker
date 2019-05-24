@@ -132,7 +132,8 @@ CourseAlertCRVAdapter.OnCourseListener {
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
         String [] projection = {CoursesContract.Columns._ID, CoursesContract.Columns.COURSE_TITLE,
-        CoursesContract.Columns.COURSE_START, CoursesContract.Columns.COURSE_END};
+        CoursesContract.Columns.COURSE_START, CoursesContract.Columns.COURSE_END,
+                CoursesContract.Columns.COURSE_TERM};
 
         switch (id){
             case LOADER_ID:

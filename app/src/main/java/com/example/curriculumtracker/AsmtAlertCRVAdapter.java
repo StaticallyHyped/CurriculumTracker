@@ -28,7 +28,6 @@ public class AsmtAlertCRVAdapter extends RecyclerView.Adapter<AsmtAlertCRVAdapte
         this.mListener = listener;
     }
 
-
     @NonNull
     @Override
     public AsmtAlertViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
