@@ -63,7 +63,7 @@
         android:id="@+id/layout_courseitem_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:text="End Date:"
         android:textColor="@color/design_default_color_primary"
         android:textSize="16sp"
@@ -74,7 +74,7 @@
         android:id="@+id/layout_courseitem_statusTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:text="Status:"
         android:textColor="@color/design_default_color_primary"
         android:textSize="16sp"
@@ -95,10 +95,9 @@
         android:id="@+id/layout_courseitem_tvend"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:text="@string/layout_courseitem_enddate"
         app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_end"
-        app:layout_constraintStart_toEndOf="@+id/layout_courseitem_end"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_tvstart"
         tools:text="end date" />
 
     <android.support.design.widget.TextInputLayout
@@ -121,14 +120,14 @@
         android:text="Course Notes:"
         android:textColor="@color/design_default_color_primary"
         android:textSize="16dp"
-        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_statusTV"
-        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_statusTV" />
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_statictermTV"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_statictermTV" />
 
     <TextView
         android:id="@+id/layout_courseitem_notecontentTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -214,5 +213,24 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_mentinfo" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_statictermTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="In Term:"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_statusTV"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_statusTV" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_termTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_statictermTV"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_status" />
 
 </android.support.constraint.ConstraintLayout>

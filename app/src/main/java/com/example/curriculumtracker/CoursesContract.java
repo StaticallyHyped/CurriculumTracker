@@ -17,6 +17,7 @@ public class CoursesContract {
         public static final String COURSE_END = "Complete";
         public static final String COURSE_STATUS = "Status";
         public static final String COURSE_NOTE = "Note";
+        public static final String COURSE_TERM = "Term";
         public static final String COURSE_MENTOR_NAME = "MentorName";
         public static final String COURSE_MENTOR_PHONE = "MentorPhone";
         public static final String COURSE_MENTOR_EMAIL = "MentorEmail";

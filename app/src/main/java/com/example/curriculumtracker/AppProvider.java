@@ -19,8 +19,10 @@ public class AppProvider extends ContentProvider {
     private AppDatabase mOpenHelper;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
-    static final String CONTENT_AUTHORITY = "com.example.curriculumtracker.provider";
-    public static final Uri CONTENT_AUTHORITY_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    static final String CONTENT_AUTHORITY = "com.example.curriculumtracker.provider"; //location in manifest where the
+    //provider will look for my database
+
+    public static final Uri CONTENT_AUTHORITY_URI = Uri.parse("content://" + CONTENT_AUTHORITY); //complete URI including provider
 
     public static final int TERMS = 100;
     public static final int TERMS_ID = 101;
@@ -69,8 +71,8 @@ public class AppProvider extends ContentProvider {
         //when the uri matches times or tasks or durations, the table is chosen which to query from
         switch(match) {
             case TERMS:
-            queryBuilder.setTables(TermsContract.TERMS_TABLE_NAME);
-            break;
+                queryBuilder.setTables(TermsContract.TERMS_TABLE_NAME);
+                break;
 
             case TERMS_ID:
                 queryBuilder.setTables(TermsContract.TERMS_TABLE_NAME);
@@ -254,11 +256,11 @@ public class AppProvider extends ContentProvider {
         String selectionCriteria;
 
         switch(match) {
-            case TERMS:
+            case TERMS: //add new term
                 db = mOpenHelper.getWritableDatabase();
                 count = db.update(TermsContract.TERMS_TABLE_NAME, values, selection, selectionArgs);
                 break;
-            case TERMS_ID:
+            case TERMS_ID: //update existing term
                 db = mOpenHelper.getWritableDatabase();
                 long termId = TermsContract.getTermId(uri);
                 selectionCriteria = TermsContract.Columns._ID + " = " + termId;
@@ -276,8 +278,11 @@ public class AppProvider extends ContentProvider {
             case COURSES_ID:
                 db = mOpenHelper.getWritableDatabase();
                 long courseId = CoursesContract.getCourseId(uri);
+
+                //this line adds a "WHERE Courses._id = courseId
                 selectionCriteria = CoursesContract.Columns._ID + " = " + courseId;
 
+                //this line appends the SQL statement by adding " AND ("
                 if((selection != null) && (selection.length() > 0)){
                     selectionCriteria += " AND (" + selection + ")";
                 }

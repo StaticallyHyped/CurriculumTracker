@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -25,7 +23,6 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
     public CoursesCRVAdapter(Cursor cursor, Context context){
         this.mCursor = cursor;
         this.mContext = context;
-        //this.mOnCourseListener = OnCourseListener;
     }
     
     @NonNull
@@ -41,8 +38,6 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
 
     @Override
     public void onBindViewHolder(@NonNull CourseViewHolder holder, final int position) {
-
-
         holder.note.setVisibility(View.GONE);
         holder.courseMentInfo.setVisibility(View.GONE);
         holder.mentEmail.setVisibility(View.GONE);
@@ -54,47 +49,45 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
         holder.staticNoteTitle.setVisibility(View.GONE);
         holder.editBtn.setVisibility(View.GONE);
         holder.deleteBtn.setVisibility(View.GONE);
+        holder.termTV.setVisibility(View.GONE);
+        holder.staticTermTV.setVisibility(View.GONE);
 
 
         Log.d(TAG, "onBindViewHolder: starts");
-        //System.out.println("this is mCursor: " + mCursor.getCount());
+
         if((mCursor == null) || (mCursor.getCount() == 0)){
             Log.d(TAG, "onBindViewHolder: mCursor is NULL");
-            holder.title.setText("Course Title");
-            //holder.startTitle.setText("DO NOT START");
+            //holder.startTitle.setText("This is only a test");
+            holder.title.setVisibility(View.GONE);
+            holder.startText.setVisibility(View.GONE);
+            holder.endText.setVisibility(View.GONE);
+            holder.endTitle.setVisibility(View.GONE);
+            holder.startTitle.setVisibility(View.GONE);
 
         } else {
-            Log.d(TAG, "onBindViewHolder: inside else statement");
+            Log.d(TAG, "onBindViewHolder: MCURSOR VALUES: " + mCursor.getCount());
+
             if(!mCursor.moveToPosition(position)){
                 throw new IllegalArgumentException("couldn't move cursor into position: " + position);
             }
+            holder.title.setVisibility(View.VISIBLE);
+            holder.startText.setVisibility(View.VISIBLE);
+            holder.endText.setVisibility(View.VISIBLE);
+            holder.endTitle.setVisibility(View.VISIBLE);
+            holder.startTitle.setVisibility(View.VISIBLE);
 
-            holder.endText.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_START)));
-            holder.startText.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_END)));
+            holder.startText.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_START)));
+            holder.endText.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_END)));
             holder.title.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_TITLE)));
             holder.note.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_NOTE)));
             holder.status.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_STATUS)));
-            Log.d(TAG, "onClick: COLUMN INDEX NUMBER: " + mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns._ID)));
 
-            /*holder.note.setVisibility(View.GONE);
-            holder.courseMentInfo.setVisibility(View.GONE);
-            holder.mentEmail.setVisibility(View.GONE);
-            holder.mentPhone.setVisibility(View.GONE);
-            holder.mentName.setVisibility(View.GONE);
-            holder.staticMentName.setVisibility(View.GONE);
-            holder.staticMentPhone.setVisibility(View.GONE);
-            holder.staticMentEmail.setVisibility(View.GONE);
-            holder.staticNoteTitle.setVisibility(View.GONE);
-            holder.editBtn.setVisibility(View.GONE);
-            holder.deleteBtn.setVisibility(View.GONE);*/
+
 
             holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "onClick: THIS IS THE TRANSITION NAME: " + v.toString());
-                    //Log.d(TAG, "onClick: COLUMN INDEX NUMBER: " + mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns._ID)));
-                    Log.d(TAG, "onClick: starts");
-                    Log.d(TAG, "onClick: POSITION: " + position);
+
                     Intent intent = new Intent(mContext, LayoutCourseitemActivity.class);
                     mCursor.moveToPosition(position);
                     intent.putExtra("course_id", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns._ID)));
@@ -103,13 +96,10 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
                     intent.putExtra("course_end", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_END)));
                     intent.putExtra("course_note", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_NOTE)));
                     intent.putExtra("course_status", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_STATUS)));
-                    Log.d(TAG, "onClick: MADE IT TO MENTOR LINE");
 
                     if (mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_MENTOR_NAME)) != null){
-                        Log.d(TAG, "onClick: ROW IS NOT NULL");
                         intent.putExtra("course_mentname", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_MENTOR_NAME)));
                     } else {
-                        Log.d(TAG, "onClick: ROW IS NOT NULL");
                         intent.putExtra("course_mentname", "");
                     }
                     if (mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_MENTOR_EMAIL)) != null){
@@ -118,21 +108,22 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
                     if (mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_MENTOR_PHONE)) != null){
                         intent.putExtra("course_mentphone", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_MENTOR_PHONE)));
                     }
+                    if (mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_TERM)) != null){
+                        intent.putExtra("course_term", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_TERM)));
+                    }
 
                     mContext.startActivity(intent);
                     Log.d(TAG, "onClick: exits");
                 }
             });
 
-            //holder.note.setVisibility(View.GONE);
-            //holder.statusSpinner TODO set up code to fill in spinner values using table
         }
         Log.d(TAG, "onBindViewHolder: exits");
     }
 
     @Override
-    public int getItemCount() { //This is actually really important. It returns how many items are returned in the
-        //recyclerview. If you leave the default to 0, you will not get any info
+    public int getItemCount() {
+        //If you leave the default to 0, you will not get any info
         if((mCursor == null) || (mCursor.getCount() == 0)){
             Log.d(TAG, "getItemCount: IS NULL IN getitemcount");
             return 1;
@@ -161,7 +152,7 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
 
     static class CourseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private static final String TAG = "CourseViewHolder (subclass in CoursesCRVAdapter";
-        //CoordinatorLayout parentLayout = null;
+
         ConstraintLayout parentLayout = null;
         TextView title = null;
         TextView endTitle = null;
@@ -181,6 +172,8 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
         TextView mentName = null;
         TextView mentEmail = null;
         TextView mentPhone = null;
+        TextView staticTermTV = null;
+        TextView termTV = null;
         OnCourseListener mOnCourseListener;
 
         public CourseViewHolder(View itemView) {
@@ -188,8 +181,8 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
             Log.d(TAG, "CourseViewHolder: starts");
             this.parentLayout = itemView.findViewById(R.id.layout_courseitem_CL);
             this.title = itemView.findViewById(R.id.layout_courseitem_title);
-            this.endTitle = itemView.findViewById(R.id.layout_courseitem_start);
-            this.startTitle = itemView.findViewById(R.id.layout_courseitem_end);
+            this.startTitle = itemView.findViewById(R.id.layout_courseitem_start);
+            this.endTitle = itemView.findViewById(R.id.layout_courseitem_end);
             this.statusTitle = itemView.findViewById(R.id.layout_courseitem_statusTV);
             this.endText = itemView.findViewById(R.id.layout_courseitem_tvend);
             this.startText = itemView.findViewById(R.id.layout_courseitem_tvstart);
@@ -205,7 +198,9 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
             this.mentName = itemView.findViewById(R.id.layout_courseitem_mentorname);
             this.mentEmail = itemView.findViewById(R.id.layout_courseitem_mentoremail);
             this.mentPhone = itemView.findViewById(R.id.layout_courseitem_mentorphone);
-//            mOnCourseListener = onCourseListener;
+            this.staticTermTV = itemView.findViewById(R.id.layout_courseitem_statictermTV);
+            this.termTV = itemView.findViewById(R.id.layout_courseitem_termTV);
+//
         }
 
         @Override

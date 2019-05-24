@@ -10,11 +10,14 @@ public class Course implements Serializable {
     private String mEnd;
     private String mStatus;
     private String mNote;
+    private String mTerm;
     private String mMentorName;
     private String mMentorPhone;
     private String mMentorEmail;
 
-    public Course(long mId, String mTitle, String mStart, String mEnd, String mStatus, String mNote, String mMentorName, String mMentorPhone, String mMentorEmail) {
+
+
+    public Course(long mId, String mTitle, String mStart, String mEnd, String mStatus, String mNote, String mTerm, String mMentorName, String mMentorPhone, String mMentorEmail) {
         this.mId = mId;
         this.mTitle = mTitle;
 
@@ -25,6 +28,7 @@ public class Course implements Serializable {
         this.mMentorName = mMentorName;
         this.mMentorPhone = mMentorPhone;
         this.mMentorEmail = mMentorEmail;
+        this.mTerm = mTerm;
     }
 
     public long getId() {
@@ -66,6 +70,14 @@ public class Course implements Serializable {
 
     public void setStatus(String mStatus) {
         this.mStatus = mStatus;
+    }
+
+    public String getmTerm() {
+        return mTerm;
+    }
+
+    public void setmTerm(String mTerm) {
+        this.mTerm = mTerm;
     }
 
     public String getMentorName() {

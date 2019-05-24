@@ -10,14 +10,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtViewHolder> {
     public static final String TAG = "AsmtsCRVAdapter";
     private Cursor mCursor;
     private Context mContext;
+
+    public ArrayList<String> courseArray;
+
 
     public AsmtsCRVAdapter(Cursor cursor, Context context){
         this.mCursor = cursor;
@@ -29,6 +35,7 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
     public AsmtViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_assessmentitem,
                 viewGroup, false);
+
         return new AsmtViewHolder(view);
     }
 
@@ -36,6 +43,9 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
     public void onBindViewHolder(final AsmtViewHolder holder, final int position) {
         holder.editBtn.setVisibility(View.GONE);
         holder.deleteBtn.setVisibility(View.GONE);
+        holder.shareBtn.setVisibility(View.GONE);
+        holder.staticCourseTV.setVisibility(View.GONE);
+        holder.courseTV.setVisibility(View.GONE);
         holder.title.setText("Assessment Title");
         holder.staticDate.setText("Assessment Date");
         holder.staticType.setText("Assessment Type");
@@ -48,21 +58,40 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
             if (!mCursor.moveToPosition(position)){
                 throw new IllegalArgumentException("could not move cursor into position");
             }
-            System.out.println("ASSESSMENTS TYPE: " + AssessmentsContract.Columns.ASMTS_TYPE);
-            holder.type.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TYPE)));
-            holder.title.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TITLE)));
-            holder.date.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_DATE)));
+            try {
+                String test = mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_TITLE));
+                courseArray.add(test);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            try {
+                holder.type.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TYPE)));
+                holder.title.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TITLE)));
+                holder.date.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_DATE)));
+                holder.courseTV.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_COURSE)));
+            } catch (Exception e){
+                e.printStackTrace();
+            }
 
             holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, LayoutAsmtItemActivity.class);
-
+                    Log.d(TAG, "onClick: INSIDE ON CLICK, Asmt title index" + mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TITLE)));
                     mCursor.moveToPosition(position);
+                    try {
+                        intent.putExtra("asmt_course", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_TITLE)));
+                        Log.d(TAG, "onClick: in try: " + mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_TITLE)));
+                    }
+                    catch (Exception e){
+                        Log.d(TAG, "onClick: in catch: " + mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_TITLE)));
+                        e.printStackTrace();
+                    }
                     intent.putExtra("asmt_id", mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns._ID)));
                     intent.putExtra("asmt_title", mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TITLE)));
                     intent.putExtra("asmt_date", mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_DATE)));
                     intent.putExtra("asmt_type", mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TYPE)));
+                    intent.putExtra("asmt_course", mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_COURSE)));
 
                     mContext.startActivity(intent);
                 }
@@ -76,6 +105,7 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
             return 1;
 
         } else {
+            Log.d(TAG, "getItemCount: mCursor count" + mCursor.getCount());
             return mCursor.getCount();
         }
     }
@@ -83,11 +113,13 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
     Cursor swapCursor(Cursor newCursor){
         Log.d(TAG, "swapCursor: starts");
         if (newCursor == mCursor){
+            Log.d(TAG, "swapCursor: newCursor == mCursor, returned null");
             return null;
         }
         final Cursor oldCursor = mCursor;
         mCursor = newCursor;
         if(newCursor != null) {
+            Log.d(TAG, "swapCursor: newCursor not null");
             notifyDataSetChanged();
         } else {
             notifyItemRangeRemoved(0, getItemCount());
@@ -105,6 +137,9 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
         ImageButton editBtn = null;
         ImageButton deleteBtn = null;
         TextView type = null;
+        ImageButton shareBtn = null;
+        TextView staticCourseTV = null;
+        TextView courseTV = null;
 
 
         public AsmtViewHolder(View itemView) {
@@ -117,7 +152,9 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
             this.editBtn = itemView.findViewById(R.id.layout_asmntitem_buttonedit);
             this.type = itemView.findViewById(R.id.layout_assesmentitem_typeTV);
             this.parentLayout = itemView.findViewById(R.id.layout_asmtitem_CL);
-
+            this.shareBtn = itemView.findViewById(R.id.layout_assessmentitem_sharebutton);
+            this.staticCourseTV = itemView.findViewById(R.id.layout_asmtitem_staticcourseTV);
+            this.courseTV = itemView.findViewById(R.id.layout_asmtitem_courseTV);
         }
     }
 }

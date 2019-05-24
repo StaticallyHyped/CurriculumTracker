@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        tools:layout_editor_absoluteY="169dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -136,12 +136,12 @@
                 android:id="@+id/textView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:text="Course Notes:"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="@+id/layout_courseitem_status2"
-                app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_status2" />
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -243,6 +243,25 @@
                 android:text="Cancel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_addcourse_mentemail" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Which term is this course in?:"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/layout_courseitem_status2"
+                app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_status2" />
+
+            <Spinner
+                android:id="@+id/layout_addcourse_termSP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                app:layout_constraintStart_toEndOf="@+id/textView7" />
 
         </android.support.constraint.ConstraintLayout>
 

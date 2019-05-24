@@ -31,5 +31,7 @@
     <string name="activity_courses_btnadd">ADD NEW COURSE</string>
     <string name="title_activity_addcourse">AddcourseActivity</string>
     <string name="title_activity_layout_courseitem">LayoutCourseitemActivity</string>
+    <string name="title_activity_set_course_alert">SetCourseAlertActivity</string>
+    <string name="title_activity_set_asmt_alert">SetAsmtAlertActivity</string>
 
 </resources>

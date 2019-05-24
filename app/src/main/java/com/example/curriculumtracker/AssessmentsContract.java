@@ -16,6 +16,7 @@ public class AssessmentsContract {
         public static final String ASMTS_TITLE = "Title";
         public static final String ASMTS_TYPE = "Type";
         public static final String ASMTS_DATE = "Date";
+        public static final String ASMTS_COURSE = "Course";
 
 
 

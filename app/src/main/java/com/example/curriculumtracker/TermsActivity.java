@@ -12,9 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
+
 
 import java.security.InvalidParameterException;
 
@@ -30,10 +34,8 @@ public class TermsActivity extends AppCompatActivity implements LoaderManager.Lo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms);
-
-        //sample Toast and intent passing a String from main activity
-        /*String testTwo = getIntent().getStringExtra("noteRV");
-        Toast.makeText(getApplicationContext(), testTwo, Toast.LENGTH_SHORT).show();*/
+        Toolbar toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
 
         RecyclerView recyclerView = findViewById(R.id.activity_termlistRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -41,6 +43,36 @@ public class TermsActivity extends AppCompatActivity implements LoaderManager.Lo
         recyclerView.setAdapter(mAdapter);
         LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch (item.getItemId()){
+            case R.id.backToMain:
+                Intent intent1 = new Intent(this, MainActivity.class);
+                Log.d(TAG, "onOptionsItemSelected: " + item.getItemId());
+                startActivity(intent1);
+                break;
+            case R.id.alertCourseStart:
+                Intent intent = new Intent(this, SetCourseAlertActivity.class);
+                intent.putExtra("start_alert", "start");
+                Log.d(TAG, "onOptionsItemSelected: alertCourseStart " + item.getItemId());
+                startActivity(intent);
+                break;
+            case R.id.alertCourseEnd:
+                Intent intent2 = new Intent(this, SetCourseAlertActivity.class);
+                intent2.putExtra("start_alert", "end");
+                startActivity(intent2);
+                break;
+            case R.id.alertAsmtDue:
+                startActivity(new Intent(this, SetAsmtAlertActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void goToAddTerm(View v){

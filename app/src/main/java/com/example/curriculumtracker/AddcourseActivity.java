@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,8 +23,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddcourseActivity extends AppCompatActivity {
 
@@ -41,8 +47,9 @@ public class AddcourseActivity extends AppCompatActivity {
     private String endDate;
     private boolean bEdit;
     private long courseId;
+    private Spinner termSP;
 
-    private String mTitle, mStart, mEnd, mStatus, mNote, mMentName, mMentPhone, mMentEmail;
+    private String mTitle, mStart, mEnd, mStatus, mNote, mMentName, mMentPhone, mMentEmail, mTerm, term1, term2, term3, term4;
 
 
     private enum AddOrEdit {EDIT, ADD}
@@ -71,7 +78,10 @@ public class AddcourseActivity extends AppCompatActivity {
         mentorPhone = findViewById(R.id.activity_addcourse_mentphoneET);
         saveBtn = findViewById(R.id.activity_addcourse_saveBtn);
         cancelBtn = findViewById(R.id.activity_addcourse_cancelBtn);
+        termSP = findViewById(R.id.layout_addcourse_termSP);
         bEdit = false;
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("THIS IS A TOOLBAR TITLE");
 
         String [] statusList = new String[]{
         "Not Started", "In Progress", "Complete"
@@ -81,14 +91,29 @@ public class AddcourseActivity extends AppCompatActivity {
         spinnerAA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusSP.setAdapter(spinnerAA);
 
-        getBooleanIntent();
+        String [] termArray = new String [] {
+                "Term 1", "Term 2", "Term 3", "Term 4"
+        };
+        ArrayAdapter termArrayListAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, termArray);
+        termArrayListAA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        termSP.setAdapter(termArrayListAA);
 
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        Date today = Calendar.getInstance().getTime();
+        String setDefaultDate = df.format(today);
+
+        getBooleanIntent();
+        Log.d(TAG, "onCreate: " + bEdit);
         if (bEdit){
             Log.d(TAG, "onCreate: EDIT MODE");
             mMode = AddOrEdit.EDIT;
+            toolbar.setTitle("Edit a Course");
             getIncomingIntent();
+            getTermSelection();
             setStartCal();
             setEndCal();
+            startDate = mStart;
+            endDate = mEnd;
 
             switch (mStatus) {
                 case "Not Started":
@@ -107,33 +132,38 @@ public class AddcourseActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "onCreate: NOW IN ADD MODE");
             mMode = AddOrEdit.ADD;
+            toolbar.setTitle("Add a Course");
+            termSP.setSelection(0);
             statusSP.setSelection(0);
+            mStatus = statusSP.getSelectedItem().toString();
+            startDate = setDefaultDate;
+            endDate = setDefaultDate;
         }
 
         statusSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        mStatus = statusSP.getSelectedItem().toString();
-                        break;
-                    case 1:
-                        mStatus = statusSP.getSelectedItem().toString();
-                        break;
-                    case 2:
-                        mStatus = statusSP.getSelectedItem().toString();
-                        break;
-                    default:
-                        throw new IllegalArgumentException("did not successfully retrieve status spinner info");
-                }
+                mStatus = statusSP.getSelectedItem().toString();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
 
+            termSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    mTerm = termSP.getSelectedItem().toString();
+                }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                termSP.setSelection(0);
+                mTerm = termSP.getSelectedItem().toString();
+            }
+        });
+        startDate = mStart;
         startCal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -141,6 +171,7 @@ public class AddcourseActivity extends AppCompatActivity {
 
             }
         });
+        endDate = mEnd;
         endCal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -159,13 +190,13 @@ public class AddcourseActivity extends AppCompatActivity {
 
                 switch (mMode) {
                     case EDIT:
-
                         if (!title.getText().toString().equals(mTitle)){
                             values.put(CoursesContract.Columns.COURSE_TITLE, title.getText().toString());
                         }
                         if (!note.getText().toString().equals(mNote)){
                             values.put(CoursesContract.Columns.COURSE_NOTE, note.getText().toString());
                         }
+
                         if (!startDate.equals(mStart)){
                             values.put(CoursesContract.Columns.COURSE_START, startDate);
                         }
@@ -181,10 +212,12 @@ public class AddcourseActivity extends AppCompatActivity {
                         if (!mentorPhone.getText().toString().equals(mMentPhone)){
                             values.put(CoursesContract.Columns.COURSE_MENTOR_PHONE, mentorPhone.getText().toString());
                         }
+                        if (!termSP.getSelectedItem().toString().equals(mTerm)){
+                            values.put(CoursesContract.Columns.COURSE_TERM, termSP.getSelectedItem().toString());
+                        }
                         values.put(CoursesContract.Columns.COURSE_STATUS, mStatus);
 
 
-                        //TODO add status spinner if block here
                         if (values.size() !=0 ){
                             contentResolver.update(CoursesContract.buildCourseURI(courseId), values, null, null);
                             saveGoToCoursesActivity(v);
@@ -198,9 +231,9 @@ public class AddcourseActivity extends AppCompatActivity {
                             values.put(CoursesContract.Columns.COURSE_END, endDate);
                             values.put(CoursesContract.Columns.COURSE_MENTOR_NAME, mentorName.getText().toString());
                             values.put(CoursesContract.Columns.COURSE_MENTOR_PHONE, mentorPhone.getText().toString());
-                            values.put(CoursesContract.Columns.COURSE_MENTOR_EMAIL, mentorPhone.getText().toString());
+                            values.put(CoursesContract.Columns.COURSE_MENTOR_EMAIL, mentorEmail.getText().toString());
                             values.put(CoursesContract.Columns.COURSE_STATUS, mStatus);
-                            //TODO add status spinner values.put
+                            values.put(CoursesContract.Columns.COURSE_TERM, mTerm);
                             contentResolver.insert(CoursesContract.CONTENT_URI, values);
                             saveGoToCoursesActivity(v);
                         } else {
@@ -210,6 +243,35 @@ public class AddcourseActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.backToMain:
+                Intent intent1 = new Intent(this, MainActivity.class);
+                Log.d(TAG, "onOptionsItemSelected: " + item.getItemId());
+                startActivity(intent1);
+                break;
+            case R.id.alertCourseStart:
+                Intent intent = new Intent(this, SetCourseAlertActivity.class);
+                intent.putExtra("start_alert", "start");
+                Log.d(TAG, "onOptionsItemSelected: alertCourseStart " + item.getItemId());
+                startActivity(intent);
+                break;
+            case R.id.alertCourseEnd:
+                Intent intent2 = new Intent(this, SetCourseAlertActivity.class);
+                intent2.putExtra("start_alert", "end");
+                startActivity(intent2);
+                break;
+            case R.id.alertAsmtDue:
+                startActivity(new Intent(this, SetAsmtAlertActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void saveGoToCoursesActivity (View v) {
@@ -226,6 +288,7 @@ public class AddcourseActivity extends AppCompatActivity {
             bEdit = true;
         }
     }
+    //gets intent from LayoutCourseitemActivity
     private void getIncomingIntent(){
 
         String stringId = getIntent().getStringExtra("course_id");
@@ -261,6 +324,9 @@ public class AddcourseActivity extends AppCompatActivity {
             mMentPhone = getIntent().getStringExtra("mentphone");
             mentorPhone.setText(mMentPhone);
         }
+        if (getIntent().hasExtra("term")){
+            mTerm = getIntent().getStringExtra("term");
+        }
     }
 
     private void setStartCal(){
@@ -293,6 +359,29 @@ public class AddcourseActivity extends AppCompatActivity {
         calendar.set(Calendar.YEAR, year);
         long timeInMillies = calendar.getTimeInMillis();
         endCal.setDate(timeInMillies);
+
+    }
+
+    private void getTermSelection(){
+        term1 = "Term 1";
+        term2 = "Term 2";
+        term3 = "Term 3";
+        term4 = "Term 4";
+        if (term1.equals(mTerm)) {
+            termSP.setSelection(0);
+
+        } else if (term2.equals(mTerm)) {
+            termSP.setSelection(1);
+
+        } else if (term3.equals(mTerm)) {
+            termSP.setSelection(2);
+
+        } else if (term4.equals(mTerm)) {
+            termSP.setSelection(3);
+
+        } else {
+            termSP.setSelection(0);
+        }
 
     }
 

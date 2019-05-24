@@ -2,13 +2,16 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_courseitem_CLtest"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".LayoutCourseitemActivity">
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
 
-    <include layout="@layout/content_layout_courseitem" />
-
+        <include layout="@layout/content_layout_courseitem" />
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
 

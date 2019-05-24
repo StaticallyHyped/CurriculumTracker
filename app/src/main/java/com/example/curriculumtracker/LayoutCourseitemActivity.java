@@ -3,14 +3,16 @@ package com.example.curriculumtracker;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,14 +32,21 @@ public class LayoutCourseitemActivity extends AppCompatActivity {
     private TextView mentEmail;
     private TextView mentPhone;
     private TextView status;
+    private TextView term;
     private String courseId;
+    private String mCourseTerm;
+    public Cursor mCursor;
+    public ArrayList<String> courseArrayList = new ArrayList<>();
+    private String query, looper, testIntent, courseTitle;
+    private boolean checkAsmtCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_courseitem);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /*Toolbar toolbar = findViewById(R.id.layout_courseitem_toolbar);
+        setSupportActionBar(toolbar);*/
+
         layout = findViewById(R.id.layout_courseitem_CL);
         edit = findViewById(layout_courseitem_Btnedit);
         delete = findViewById(R.id.layout_courseitem_Btndelete);
@@ -49,15 +58,20 @@ public class LayoutCourseitemActivity extends AppCompatActivity {
         mentPhone = findViewById(R.id.layout_courseitem_mentorphone);
         mentEmail = findViewById(R.id.layout_courseitem_mentoremail);
         status = findViewById(R.id.layout_courseitem_status);
+        term = findViewById(R.id.layout_courseitem_termTV);
+
         getIncomingIntent();
+
     }
 
-    private void getIncomingIntent() {
 
+    // gets intent from CoursesCRVAdapter
+    private void getIncomingIntent() {
+        testIntent = getIntent().getStringExtra("start_dialog");
         courseId = getIntent().getStringExtra("course_id");
 
         if (getIntent().hasExtra("course_title")){
-            String courseTitle = getIntent().getStringExtra("course_title");
+            courseTitle = getIntent().getStringExtra("course_title");
             title.setText(courseTitle);
         }
         if (getIntent().hasExtra("course_start")) {
@@ -88,6 +102,14 @@ public class LayoutCourseitemActivity extends AppCompatActivity {
             String status = getIntent().getStringExtra("course_status");
             this.status.setText(status);
         }
+        if (getIntent().hasExtra("course_term")) {
+            String mTerm = getIntent().getStringExtra("course_term");
+            term.setText(mTerm);
+        }
+        if (getIntent().hasExtra("term_title")){
+            String mTermTitle = getIntent().getStringExtra("term_title");
+            Log.d(TAG, "getIncomingIntent: TERM TITLE PASSED" + mTermTitle);
+        }
     }
 
     public void goToEditCourse (View v) {
@@ -103,20 +125,51 @@ public class LayoutCourseitemActivity extends AppCompatActivity {
         intent.putExtra("mentemail", mentEmail.getText());
         intent.putExtra("mentphone", mentPhone.getText());
         intent.putExtra("status", status.getText());
+        intent.putExtra("term", term.getText());
         startActivity(intent);
 
     }
+
 
     public void backToCourseList(View v) {
         startActivity(new Intent(LayoutCourseitemActivity.this, CoursesActivity.class));
     }
 
     public void deleteCourseItem(View v) {
+
         final long delCourseId = Long.parseLong(courseId);
         Context context = v.getContext();
         ContentResolver contentResolver = context.getContentResolver();
-        getContentResolver().delete(CoursesContract.buildCourseURI(delCourseId), null, null);
+        getCourseList();
+        if (!checkAsmtCourse){
+            getContentResolver().delete(CoursesContract.buildCourseURI(delCourseId), null, null);
+        } else {
+            Toast.makeText(this, "This course contains one or more assessments.\n" +
+                    "Please delete the associated assessments before proceeding", Toast.LENGTH_LONG).show();
+        }
         backToCourseList(v);
     }
+
+    public void getCourseList(){
+        query = "SELECT Course FROM Assessments;";
+        AppDatabase db = AppDatabase.getInstance(this);
+        mCursor = db.getReadableDatabase().rawQuery(query, null);
+        if (mCursor.getCount() > 0 ){
+            mCursor.moveToFirst();
+            do{
+                looper = mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_COURSE));
+                if (looper.equals(courseTitle)){
+                    checkAsmtCourse = true;
+                    break;
+                } else {
+                    checkAsmtCourse = false;
+                }
+
+            } while (mCursor.moveToNext());
+            mCursor.close();
+        }
+
+    }
+
 
 }

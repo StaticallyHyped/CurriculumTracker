@@ -41,7 +41,11 @@ public class TermsCRVAdapter extends RecyclerView.Adapter<TermsCRVAdapter.TermVi
         holder.deleteBtn.setVisibility(View.GONE);
 
         if((mCursor == null) || (mCursor.getCount()==0)) {
-            holder.title.setText("Term Title");
+            holder.title.setVisibility(View.GONE);
+            holder.startDate.setVisibility(View.GONE);
+            holder.startStaticText.setVisibility(View.GONE);
+            holder.endStaticText.setVisibility(View.GONE);
+            holder.endDate.setVisibility(View.GONE);
             Log.d(TAG, "onBindViewHolder: mCursor is NULL");
         } else {
             if (!mCursor.moveToPosition(position)){
