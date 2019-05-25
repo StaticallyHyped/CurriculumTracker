@@ -159,7 +159,6 @@
         android:id="@+id/layout_courseitem_mentoremail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_staticmemail"
         app:layout_constraintStart_toStartOf="@+id/layout_courseitem_mentorphone" />
 
@@ -167,7 +166,6 @@
         android:id="@+id/layout_courseitem_mentorphone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_staticmphone"
         app:layout_constraintStart_toStartOf="@+id/layout_courseitem_mentorname" />
 
@@ -176,7 +174,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_staticmname"
         app:layout_constraintStart_toEndOf="@+id/layout_courseitem_staticmname" />
 
@@ -232,5 +229,75 @@
         android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_statictermTV"
         app:layout_constraintStart_toStartOf="@+id/layout_courseitem_status" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_secondmentheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Second Mentor Info"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_staticmemail" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_staticmentName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Mentor Name"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_staticmemail"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_secondmentheader" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_mentName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_staticmentName2"
+        app:layout_constraintStart_toEndOf="@+id/layout_courseitem_staticmentName2" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_staticMentphone2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Mentor Phone"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_staticmentName2"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_staticmentName2" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_mentPhone2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_staticMentphone2"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_mentName2" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_staticMentemail2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Mentor Email"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_staticMentphone2"
+        app:layout_constraintTop_toBottomOf="@+id/layout_courseitem_staticMentphone2" />
+
+    <TextView
+        android:id="@+id/layout_courseitem_mentEmail2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@+id/layout_courseitem_staticMentemail2"
+        app:layout_constraintStart_toStartOf="@+id/layout_courseitem_mentPhone2" />
 
 </android.support.constraint.ConstraintLayout>

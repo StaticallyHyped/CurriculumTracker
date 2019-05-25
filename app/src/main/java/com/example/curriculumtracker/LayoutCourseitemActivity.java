@@ -37,7 +37,9 @@ public class LayoutCourseitemActivity extends AppCompatActivity {
     private String mCourseTerm;
     public Cursor mCursor;
     public ArrayList<String> courseArrayList = new ArrayList<>();
-    private String query, looper, testIntent, courseTitle;
+    private String query, looper, testIntent, courseTitle, secondMentName,
+            secondMentPhone, secondMentEmail;
+    private TextView secondMentNameTV, secondMentPhoneTV, secondMentEmailTV;
     private boolean checkAsmtCourse;
 
     @Override
@@ -59,6 +61,9 @@ public class LayoutCourseitemActivity extends AppCompatActivity {
         mentEmail = findViewById(R.id.layout_courseitem_mentoremail);
         status = findViewById(R.id.layout_courseitem_status);
         term = findViewById(R.id.layout_courseitem_termTV);
+        secondMentNameTV = findViewById(R.id.layout_courseitem_mentName2);
+        secondMentPhoneTV = findViewById(R.id.layout_courseitem_mentPhone2);
+        secondMentEmailTV = findViewById(R.id.layout_courseitem_mentEmail2);
 
         getIncomingIntent();
 
@@ -110,8 +115,23 @@ public class LayoutCourseitemActivity extends AppCompatActivity {
             String mTermTitle = getIntent().getStringExtra("term_title");
             Log.d(TAG, "getIncomingIntent: TERM TITLE PASSED" + mTermTitle);
         }
+        if (getIntent().hasExtra("course_second_mentname")){
+            secondMentName = getIntent().getStringExtra("course_second_mentname");
+            Log.d(TAG, "getIncomingIntent: secondmentnname" + secondMentName);
+            secondMentNameTV.setText(secondMentName);
+        }
+        if (getIntent().hasExtra("course_second_mentphone")){
+            secondMentPhone = getIntent().getStringExtra("course_second_mentphone");
+            Log.d(TAG, "getIncomingIntent: secondmentphone" + secondMentPhone);
+            secondMentPhoneTV.setText(secondMentPhone);
+        }
+        if (getIntent().hasExtra("course_second_mentemail")){
+            secondMentEmail = getIntent().getStringExtra("course_second_mentemail");
+            Log.d(TAG, "getIncomingIntent: secondmentemail" + secondMentEmail);
+            secondMentEmailTV.setText(secondMentEmail);
+        }
     }
-
+//  sends intent to AddcourseActivity
     public void goToEditCourse (View v) {
         Intent intent = new Intent(this, AddcourseActivity.class);
         boolean edit = true;
@@ -126,6 +146,9 @@ public class LayoutCourseitemActivity extends AppCompatActivity {
         intent.putExtra("mentphone", mentPhone.getText());
         intent.putExtra("status", status.getText());
         intent.putExtra("term", term.getText());
+        intent.putExtra("second_mentname", secondMentNameTV.getText());
+        intent.putExtra("second_mentphone", secondMentPhoneTV.getText());
+        intent.putExtra("second_mentemail", secondMentEmailTV.getText());
         startActivity(intent);
 
     }

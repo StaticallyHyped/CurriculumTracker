@@ -21,6 +21,9 @@ public class CoursesContract {
         public static final String COURSE_MENTOR_NAME = "MentorName";
         public static final String COURSE_MENTOR_PHONE = "MentorPhone";
         public static final String COURSE_MENTOR_EMAIL = "MentorEmail";
+        public static final String COURSE_SECOND_MENTOR_NAME = "SecondMentorName";
+        public static final String COURSE_SECOND_MENTOR_PHONE = "SecondMentorPhone";
+        public static final String COURSE_SECOND_MENTOR_EMAIL = "SecondMentorEmail";
 
         private Columns() {
             //private constructor to prevent instantiation

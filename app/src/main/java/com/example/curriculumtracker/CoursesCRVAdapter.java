@@ -51,9 +51,14 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
         holder.deleteBtn.setVisibility(View.GONE);
         holder.termTV.setVisibility(View.GONE);
         holder.staticTermTV.setVisibility(View.GONE);
+        holder.staticSecondMentName.setVisibility(View.GONE);
+        holder.staticSecondMentEmail.setVisibility(View.GONE);
+        holder.staticSecondMentPhone.setVisibility(View.GONE);
+        holder.secondMentName.setVisibility(View.GONE);
+        holder.secondMentPhone.setVisibility(View.GONE);
+        holder.secondMentEmail.setVisibility(View.GONE);
+        holder.secondMentHeader.setVisibility(View.GONE);
 
-
-        Log.d(TAG, "onBindViewHolder: starts");
 
         if((mCursor == null) || (mCursor.getCount() == 0)){
             Log.d(TAG, "onBindViewHolder: mCursor is NULL");
@@ -110,6 +115,15 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
                     }
                     if (mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_TERM)) != null){
                         intent.putExtra("course_term", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_TERM)));
+                    }
+                    if (mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_SECOND_MENTOR_NAME)) !=null){
+                        intent.putExtra("course_second_mentname", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_SECOND_MENTOR_NAME)));
+                    }
+                    if (mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_SECOND_MENTOR_PHONE)) !=null){
+                        intent.putExtra("course_second_mentphone", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_SECOND_MENTOR_PHONE)));
+                    }
+                    if (mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_SECOND_MENTOR_EMAIL)) !=null){
+                        intent.putExtra("course_second_mentemail", mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_SECOND_MENTOR_EMAIL)));
                     }
 
                     mContext.startActivity(intent);
@@ -175,6 +189,8 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
         TextView staticTermTV = null;
         TextView termTV = null;
         OnCourseListener mOnCourseListener;
+        TextView staticSecondMentName, staticSecondMentPhone, staticSecondMentEmail, secondMentName,
+                secondMentPhone, secondMentEmail, secondMentHeader;
 
         public CourseViewHolder(View itemView) {
             super(itemView);
@@ -200,6 +216,14 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
             this.mentPhone = itemView.findViewById(R.id.layout_courseitem_mentorphone);
             this.staticTermTV = itemView.findViewById(R.id.layout_courseitem_statictermTV);
             this.termTV = itemView.findViewById(R.id.layout_courseitem_termTV);
+            this.staticSecondMentName = itemView.findViewById(R.id.layout_courseitem_staticmentName2);
+            this.staticSecondMentPhone = itemView.findViewById(R.id.layout_courseitem_staticMentphone2);
+            this.staticSecondMentEmail = itemView.findViewById(R.id.layout_courseitem_staticMentemail2);
+            this.secondMentName = itemView.findViewById(R.id.layout_courseitem_mentName2);
+            this.secondMentPhone = itemView.findViewById(R.id.layout_courseitem_mentPhone2);
+            this.secondMentEmail = itemView.findViewById(R.id.layout_courseitem_mentEmail2);
+            this.secondMentHeader = itemView.findViewById(R.id.layout_courseitem_secondmentheader);
+
 //
         }
 

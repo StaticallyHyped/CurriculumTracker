@@ -86,7 +86,8 @@ public class CoursesActivity extends AppCompatActivity implements LoaderManager.
         String [] projection = {CoursesContract.Columns._ID, CoursesContract.Columns.COURSE_TITLE,
         CoursesContract.Columns.COURSE_START, CoursesContract.Columns.COURSE_END, CoursesContract.Columns.COURSE_STATUS,
                 CoursesContract.Columns.COURSE_NOTE, CoursesContract.Columns.COURSE_TERM, CoursesContract.Columns.COURSE_MENTOR_NAME,
-        CoursesContract.Columns.COURSE_MENTOR_PHONE, CoursesContract.Columns.COURSE_MENTOR_EMAIL};
+        CoursesContract.Columns.COURSE_MENTOR_PHONE, CoursesContract.Columns.COURSE_MENTOR_EMAIL, CoursesContract.Columns.COURSE_SECOND_MENTOR_NAME,
+                CoursesContract.Columns.COURSE_SECOND_MENTOR_PHONE, CoursesContract.Columns.COURSE_SECOND_MENTOR_EMAIL};
 
         switch (id){
             case LOADER_ID:

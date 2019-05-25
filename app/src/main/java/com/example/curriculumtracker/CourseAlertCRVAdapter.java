@@ -1,18 +1,12 @@
 package com.example.curriculumtracker;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +63,13 @@ public class CourseAlertCRVAdapter extends RecyclerView.Adapter<CourseAlertCRVAd
         holder.statusTitle.setVisibility(View.GONE);
         holder.term.setVisibility(View.GONE);
         holder.staticTerm.setVisibility(View.GONE);
+        holder.staticSecondMentName.setVisibility(View.GONE);
+        holder.staticSecondMentPhone.setVisibility(View.GONE);
+        holder.staticSecondMentEmail.setVisibility(View.GONE);
+        holder.secondMentName.setVisibility(View.GONE);
+        holder.secondMentPhone.setVisibility(View.GONE);
+        holder.secondMentEmail.setVisibility(View.GONE);
+        holder.secondMentHeader.setVisibility(View.GONE);
 
         if((mCursor == null) || (mCursor.getCount() == 0)){
             holder.title.setText("Course Title");
@@ -143,6 +144,8 @@ public class CourseAlertCRVAdapter extends RecyclerView.Adapter<CourseAlertCRVAd
         TextView mentName = null;
         TextView mentEmail = null;
         TextView mentPhone = null;
+        TextView staticSecondMentName, staticSecondMentPhone, staticSecondMentEmail, secondMentName, secondMentHeader,
+        secondMentPhone, secondMentEmail;
         AlertDialog mDialog = null;
         View messageView = null;
 
@@ -173,6 +176,13 @@ public class CourseAlertCRVAdapter extends RecyclerView.Adapter<CourseAlertCRVAd
             this.term = itemView.findViewById(R.id.layout_courseitem_termTV);
             this.staticTerm = itemView.findViewById(R.id.layout_courseitem_statictermTV);
             this.messageView = LayoutInflater.from(itemView.getContext()).inflate(R.layout.dialog_coursealert, null, false);
+            this.staticSecondMentName = itemView.findViewById(R.id.layout_courseitem_staticmentName2);
+            this.staticSecondMentPhone = itemView.findViewById(R.id.layout_courseitem_staticMentphone2);
+            this.staticSecondMentEmail = itemView.findViewById(R.id.layout_courseitem_staticMentemail2);
+            this.secondMentName = itemView.findViewById(R.id.layout_courseitem_mentName2);
+            this.secondMentPhone = itemView.findViewById(R.id.layout_courseitem_mentPhone2);
+            this.secondMentEmail = itemView.findViewById(R.id.layout_courseitem_mentEmail2);
+            this.secondMentHeader = itemView.findViewById(R.id.layout_courseitem_secondmentheader);
 
         }
 

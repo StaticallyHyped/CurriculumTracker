@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="169dp">
+        tools:layout_editor_absoluteY="16dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -237,12 +237,12 @@
                 android:id="@+id/activity_addcourse_cancelBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:onClick="cancelBackToCoursesActivity"
                 android:text="Cancel"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_addcourse_mentemail" />
+                app:layout_constraintTop_toBottomOf="@id/content_addcourse_mentEmail2"
+                tools:layout_editor_absoluteY="1084dp" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -262,6 +262,76 @@
                 android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView7"
                 app:layout_constraintStart_toEndOf="@+id/textView7" />
+
+            <TextView
+                android:id="@+id/secondcoursementorinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="(Optional) Second Course Mentor Info"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_addcourse_mentemail" />
+
+            <TextView
+                android:id="@+id/content_addcourse_staticmentName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Mentor Name"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/textView6"
+                app:layout_constraintTop_toBottomOf="@id/secondcoursementorinfo" />
+
+            <EditText
+                android:id="@+id/content_addcourse_mentName2"
+                android:layout_width="212dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBaseline_toBaselineOf="@id/content_addcourse_staticmentName2"
+                app:layout_constraintStart_toEndOf="@id/content_addcourse_staticmentName2" />
+
+            <TextView
+                android:id="@+id/content_addcourse_staticmentPhone2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Mentor Phone"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/content_addcourse_staticmentName2" />
+
+            <EditText
+                android:id="@+id/content_addcourse_mentPhone2"
+                android:layout_width="212dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBaseline_toBaselineOf="@+id/content_addcourse_staticmentPhone2"
+                app:layout_constraintStart_toStartOf="@id/content_addcourse_mentName2" />
+
+            <TextView
+                android:id="@+id/content_addcourse_staticMentEmail2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Mentor Email"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/content_addcourse_staticmentPhone2" />
+
+            <EditText
+                android:id="@+id/content_addcourse_mentEmail2"
+                android:layout_width="212dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBaseline_toBaselineOf="@id/content_addcourse_staticMentEmail2"
+                app:layout_constraintStart_toStartOf="@id/content_addcourse_mentPhone2" />
 
         </android.support.constraint.ConstraintLayout>
 

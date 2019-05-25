@@ -115,6 +115,4 @@ public class LayoutAsmtItemActivity extends AppCompatActivity {
     }
 
 
-
-
 }

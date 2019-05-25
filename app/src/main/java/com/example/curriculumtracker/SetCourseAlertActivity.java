@@ -53,6 +53,8 @@ CourseAlertCRVAdapter.OnCourseListener {
         setContentView(R.layout.activity_set_course_alert);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("Set a Course Alert");
 
         RecyclerView recyclerView = findViewById(R.id.content_coursealert_RV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

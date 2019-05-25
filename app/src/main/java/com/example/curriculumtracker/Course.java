@@ -14,10 +14,14 @@ public class Course implements Serializable {
     private String mMentorName;
     private String mMentorPhone;
     private String mMentorEmail;
+    private String mSecondMentorName;
+    private String mSecondMentorPhone;
+    private String mSecondMentorEmail;
 
 
 
-    public Course(long mId, String mTitle, String mStart, String mEnd, String mStatus, String mNote, String mTerm, String mMentorName, String mMentorPhone, String mMentorEmail) {
+    public Course(long mId, String mTitle, String mStart, String mEnd, String mStatus, String mNote, String mTerm, String mMentorName,
+                  String mMentorPhone, String mMentorEmail, String mSecondMentorName, String mSecondMentorPhone, String mSecondMentorEmail) {
         this.mId = mId;
         this.mTitle = mTitle;
 
@@ -29,6 +33,9 @@ public class Course implements Serializable {
         this.mMentorPhone = mMentorPhone;
         this.mMentorEmail = mMentorEmail;
         this.mTerm = mTerm;
+        this.mSecondMentorName = mSecondMentorName;
+        this.mSecondMentorPhone = mSecondMentorPhone;
+        this.mSecondMentorEmail = mSecondMentorEmail;
     }
 
     public long getId() {
@@ -102,6 +109,18 @@ public class Course implements Serializable {
 
     public void setMentorEmail(String mMentorEmail) {
         this.mMentorEmail = mMentorEmail;
+    }
+
+    public void setmSecondMentorName(String mSecondMentorName) {
+        this.mSecondMentorName = mSecondMentorName;
+    }
+
+    public void setmSecondMentorPhone(String mSecondMentorPhone) {
+        this.mSecondMentorPhone = mSecondMentorPhone;
+    }
+
+    public void setmSecondMentorEmail(String mSecondMentorEmail) {
+        this.mSecondMentorEmail = mSecondMentorEmail;
     }
 
     @Override

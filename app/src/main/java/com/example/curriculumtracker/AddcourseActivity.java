@@ -48,8 +48,10 @@ public class AddcourseActivity extends AppCompatActivity {
     private boolean bEdit;
     private long courseId;
     private Spinner termSP;
+    private EditText secondMentNameTV, secondMentPhoneTV, secondMentEmailTV;
 
-    private String mTitle, mStart, mEnd, mStatus, mNote, mMentName, mMentPhone, mMentEmail, mTerm, term1, term2, term3, term4;
+    private String mTitle, mStart, mEnd, mStatus, mNote, mMentName, mMentPhone,
+            mMentEmail, mTerm, term1, term2, term3, term4, mSecondMentName, mSecondMentPhone, mSecondMentEmail;
 
 
     private enum AddOrEdit {EDIT, ADD}
@@ -79,6 +81,10 @@ public class AddcourseActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.activity_addcourse_saveBtn);
         cancelBtn = findViewById(R.id.activity_addcourse_cancelBtn);
         termSP = findViewById(R.id.layout_addcourse_termSP);
+        secondMentNameTV = findViewById(R.id.content_addcourse_mentName2);
+        secondMentPhoneTV = findViewById(R.id.content_addcourse_mentPhone2);
+        secondMentEmailTV = findViewById(R.id.content_addcourse_mentEmail2);
+
         bEdit = false;
         ActionBar ab = getSupportActionBar();
         ab.setTitle("THIS IS A TOOLBAR TITLE");
@@ -215,8 +221,16 @@ public class AddcourseActivity extends AppCompatActivity {
                         if (!termSP.getSelectedItem().toString().equals(mTerm)){
                             values.put(CoursesContract.Columns.COURSE_TERM, termSP.getSelectedItem().toString());
                         }
+                        if (!secondMentNameTV.getText().toString().equals(mSecondMentName)){
+                            values.put(CoursesContract.Columns.COURSE_SECOND_MENTOR_NAME, secondMentNameTV.getText().toString());
+                        }
+                        if (!secondMentPhoneTV.getText().toString().equals(mSecondMentPhone)){
+                            values.put(CoursesContract.Columns.COURSE_SECOND_MENTOR_PHONE, secondMentPhoneTV.getText().toString());
+                        }
+                        if (!secondMentEmailTV.getText().toString().equals(mSecondMentEmail)){
+                            values.put(CoursesContract.Columns.COURSE_SECOND_MENTOR_EMAIL, secondMentEmailTV.getText().toString());
+                        }
                         values.put(CoursesContract.Columns.COURSE_STATUS, mStatus);
-
 
                         if (values.size() !=0 ){
                             contentResolver.update(CoursesContract.buildCourseURI(courseId), values, null, null);
@@ -234,6 +248,9 @@ public class AddcourseActivity extends AppCompatActivity {
                             values.put(CoursesContract.Columns.COURSE_MENTOR_EMAIL, mentorEmail.getText().toString());
                             values.put(CoursesContract.Columns.COURSE_STATUS, mStatus);
                             values.put(CoursesContract.Columns.COURSE_TERM, mTerm);
+                            values.put(CoursesContract.Columns.COURSE_SECOND_MENTOR_NAME, secondMentNameTV.getText().toString());
+                            values.put(CoursesContract.Columns.COURSE_SECOND_MENTOR_PHONE, secondMentPhoneTV.getText().toString());
+                            values.put(CoursesContract.Columns.COURSE_SECOND_MENTOR_EMAIL, secondMentEmailTV.getText().toString());
                             contentResolver.insert(CoursesContract.CONTENT_URI, values);
                             saveGoToCoursesActivity(v);
                         } else {
@@ -326,6 +343,18 @@ public class AddcourseActivity extends AppCompatActivity {
         }
         if (getIntent().hasExtra("term")){
             mTerm = getIntent().getStringExtra("term");
+        }
+        if (getIntent().hasExtra("second_mentname")){
+            mSecondMentName = getIntent().getStringExtra("second_mentname");
+            secondMentNameTV.setText(mSecondMentName);
+        }
+        if (getIntent().hasExtra("second_mentphone")){
+            mSecondMentPhone = getIntent().getStringExtra("second_mentphone");
+            secondMentPhoneTV.setText(mSecondMentPhone);
+        }
+        if (getIntent().hasExtra("second_mentemail")){
+            mSecondMentEmail = getIntent().getStringExtra("second_mentemail");
+            secondMentEmailTV.setText(mSecondMentEmail);
         }
     }
 

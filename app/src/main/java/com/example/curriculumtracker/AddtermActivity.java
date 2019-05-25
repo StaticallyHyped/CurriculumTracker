@@ -58,7 +58,7 @@ public class AddtermActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_addterm_toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("THIS IS A TOOLBAR TITLE");
+        ab.setTitle("Add a Term");
 
         cancelBtn = findViewById(R.id.activity_addterm_btndelete);
         saveBtn = findViewById(R.id.activity_addterm_btnsave);
@@ -69,11 +69,6 @@ public class AddtermActivity extends AppCompatActivity {
 
         getBooleanIntent();
 
-       /* if (bEdit){
-            toolbar.setTitle("Edit a Term");
-        } else {
-            toolbar.setTitle("Add a Term");
-        }*/
 
         String [] termList = new String[]{
                 "Term 1", "Term 2", "Term 3", "Term 4"

@@ -67,7 +67,10 @@ public class AppDatabase extends SQLiteOpenHelper {
                 + CoursesContract.Columns.COURSE_TERM + " TEXT, "
                 + CoursesContract.Columns.COURSE_MENTOR_NAME + " TEXT, "
                 + CoursesContract.Columns.COURSE_MENTOR_PHONE + " TEXT, "
-                + CoursesContract.Columns.COURSE_MENTOR_EMAIL + " TEXT);";
+                + CoursesContract.Columns.COURSE_MENTOR_EMAIL + " TEXT, "
+                + CoursesContract.Columns.COURSE_SECOND_MENTOR_NAME + " TEXT, "
+                + CoursesContract.Columns.COURSE_SECOND_MENTOR_PHONE + " TEXT, "
+                + CoursesContract.Columns.COURSE_SECOND_MENTOR_EMAIL + " TEXT);";
 
 
         Log.d(TAG, courseSQL);
@@ -88,7 +91,10 @@ public class AppDatabase extends SQLiteOpenHelper {
                 + CoursesContract.Columns.COURSE_TERM + " TEXT, "
                 + CoursesContract.Columns.COURSE_MENTOR_NAME + " TEXT, "
                 + CoursesContract.Columns.COURSE_MENTOR_PHONE + " TEXT, "
-                + CoursesContract.Columns.COURSE_MENTOR_EMAIL + " TEXT);";
+                + CoursesContract.Columns.COURSE_MENTOR_EMAIL + " TEXT, "
+                + CoursesContract.Columns.COURSE_SECOND_MENTOR_NAME + " TEXT, "
+                + CoursesContract.Columns.COURSE_SECOND_MENTOR_PHONE + " TEXT, "
+                + CoursesContract.Columns.COURSE_SECOND_MENTOR_EMAIL + " TEXT);";
 
 
         Log.d(TAG, sSQL);
