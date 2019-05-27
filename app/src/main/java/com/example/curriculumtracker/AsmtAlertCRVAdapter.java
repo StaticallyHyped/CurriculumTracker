@@ -37,7 +37,7 @@ public class AsmtAlertCRVAdapter extends RecyclerView.Adapter<AsmtAlertCRVAdapte
 
     @Override
     public void onBindViewHolder(@NonNull AsmtAlertCRVAdapter.AsmtAlertViewHolder holder, final int position) {
-        holder.shareBtn.setVisibility(View.GONE);
+
         holder.deleteBtn.setVisibility(View.GONE);
         holder.editBtn.setVisibility(View.GONE);
 
@@ -109,7 +109,7 @@ public class AsmtAlertCRVAdapter extends RecyclerView.Adapter<AsmtAlertCRVAdapte
             this.deleteBtn = itemView.findViewById(R.id.layout_asmntitem_buttondelete);
             this.editBtn = itemView.findViewById(R.id.layout_asmntitem_buttonedit);
             this.type = itemView.findViewById(R.id.layout_assesmentitem_typeTV);
-            this.shareBtn = itemView.findViewById(R.id.layout_assessmentitem_sharebutton);
+
             this.courseTv = itemView.findViewById(R.id.layout_asmtitem_courseTV);
             this.staticCourseTv = itemView.findViewById(R.id.layout_asmtitem_staticcourseTV);
 

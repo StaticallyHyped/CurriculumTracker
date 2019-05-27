@@ -44,7 +44,7 @@ public class AddtermActivity extends AppCompatActivity {
     private long termId;
     private String mTitle, mStart, mEnd, addTitle, title;
     boolean bEdit;
-    private Spinner titleSpinner;
+    private EditText titleTE;
 
     public AddtermActivity() {
         Log.d(TAG, "AddtermActivity: constructor called");
@@ -64,20 +64,10 @@ public class AddtermActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.activity_addterm_btnsave);
         startCal = findViewById(R.id.activity_addterm_startcal);
         endCal = findViewById(R.id.activity_addterm_endcal);
-        titleSpinner = findViewById(R.id.activity_addterm_spinner);
+        titleTE = findViewById(R.id.content_addterm_titleET);
         bEdit = false;
 
         getBooleanIntent();
-
-
-        String [] termList = new String[]{
-                "Term 1", "Term 2", "Term 3", "Term 4"
-        };
-
-        ArrayAdapter<String> spinnerAA = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, termList);
-        spinnerAA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        titleSpinner.setAdapter(spinnerAA);
 
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         Date today = Calendar.getInstance().getTime();
@@ -93,10 +83,9 @@ public class AddtermActivity extends AppCompatActivity {
             startDate = mStart;
             endDate = mEnd;
         } else {
+            title = titleTE.getText().toString();
             mMode = AddOrEdit.ADD;
             toolbar.setTitle("Add a Term");
-            titleSpinner.setSelection(0);
-            title = "Term 1";
             startDate = setDefaultDate;
             endDate = setDefaultDate;
 
@@ -116,16 +105,7 @@ public class AddtermActivity extends AppCompatActivity {
             }
         });
 
-        titleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                title = titleSpinner.getSelectedItem().toString();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,9 +116,10 @@ public class AddtermActivity extends AppCompatActivity {
 
                 switch (mMode) {
                     case EDIT:
+                        title = titleTE.getText().toString();
                         Log.d(TAG, "onClick: YOU'RE UPDATING/EDITING A TERM");
                         if (!title.equals(mTitle)) {
-                            values.put(TermsContract.Columns.TERMS_TITLE, title);
+                            values.put(TermsContract.Columns.TERMS_TITLE, titleTE.getText().toString());
                         } else {
                             Toast.makeText(getApplicationContext(), "Title cannot be empty", Toast.LENGTH_SHORT).show();
                         }
@@ -154,9 +135,10 @@ public class AddtermActivity extends AppCompatActivity {
                         }
                         break;
                     case ADD:
-
+                        title = titleTE.getText().toString();
+                        Log.d(TAG, "onClick: TITLE = " + title);
                         if (title.length() > 0) {
-                            values.put(TermsContract.Columns.TERMS_TITLE, title);
+                            values.put(TermsContract.Columns.TERMS_TITLE, titleTE.getText().toString());
                             values.put(TermsContract.Columns.TERMS_STARTDATE, startDate);
                             values.put(TermsContract.Columns.TERMS_ENDDATE, endDate);
                             contentResolver.insert(TermsContract.CONTENT_URI, values);
@@ -206,22 +188,7 @@ public class AddtermActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra("title")){
             mTitle = getIntent().getStringExtra("title");
-            switch (mTitle){
-                case "Term 1":
-                    titleSpinner.setSelection(0);
-                    break;
-                case "Term 2":
-                    titleSpinner.setSelection(1);
-                    break;
-                case "Term 3":
-                    titleSpinner.setSelection(2);
-                    break;
-                case "Term 4":
-                    titleSpinner.setSelection(3);
-                    break;
-                    default:
-                        titleSpinner.setSelection(0);
-            }
+            titleTE.setText(mTitle);
         }
         if (getIntent().hasExtra("start")){
             mStart = getIntent().getStringExtra("start");

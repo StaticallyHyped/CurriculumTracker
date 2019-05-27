@@ -104,15 +104,5 @@ public class LayoutAsmtItemActivity extends AppCompatActivity {
         backToAssessmentsList(v);
     }
 
-    public void shareAsmtItem(View v) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Title: " + title.getText());
-        intent.putExtra(Intent.EXTRA_TEXT, ("Due Date: " + dueDate.getText()) + "\n" +
-        "Type of Assessment: " + type.getText() + "\n" + "For Course: " + courseTv.getText());
-
-        startActivity(Intent.createChooser(intent, "Share using"));
-    }
-
 
 }

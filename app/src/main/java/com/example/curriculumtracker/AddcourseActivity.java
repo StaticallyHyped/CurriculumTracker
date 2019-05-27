@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -49,9 +50,10 @@ public class AddcourseActivity extends AppCompatActivity {
     private long courseId;
     private Spinner termSP;
     private EditText secondMentNameTV, secondMentPhoneTV, secondMentEmailTV;
-
+    private Cursor mCursor;
     private String mTitle, mStart, mEnd, mStatus, mNote, mMentName, mMentPhone,
             mMentEmail, mTerm, term1, term2, term3, term4, mSecondMentName, mSecondMentPhone, mSecondMentEmail;
+    ArrayList<String> termArrayList = new ArrayList<>();
 
 
     private enum AddOrEdit {EDIT, ADD}
@@ -87,7 +89,7 @@ public class AddcourseActivity extends AppCompatActivity {
 
         bEdit = false;
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("THIS IS A TOOLBAR TITLE");
+        ab.setTitle("Add a Course");
 
         String [] statusList = new String[]{
         "Not Started", "In Progress", "Complete"
@@ -97,16 +99,15 @@ public class AddcourseActivity extends AppCompatActivity {
         spinnerAA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusSP.setAdapter(spinnerAA);
 
-        String [] termArray = new String [] {
-                "Term 1", "Term 2", "Term 3", "Term 4"
-        };
-        ArrayAdapter termArrayListAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, termArray);
+        ArrayAdapter termArrayListAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, termArrayList);
         termArrayListAA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         termSP.setAdapter(termArrayListAA);
+
 
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         Date today = Calendar.getInstance().getTime();
         String setDefaultDate = df.format(today);
+        Log.d(TAG, "onCreate: DEFAULT DATE: " + setDefaultDate);
 
         getBooleanIntent();
         Log.d(TAG, "onCreate: " + bEdit);
@@ -115,9 +116,10 @@ public class AddcourseActivity extends AppCompatActivity {
             mMode = AddOrEdit.EDIT;
             toolbar.setTitle("Edit a Course");
             getIncomingIntent();
-            getTermSelection();
+            getTermList();
             setStartCal();
             setEndCal();
+            termArrayListAA.notifyDataSetChanged();
             startDate = mStart;
             endDate = mEnd;
 
@@ -136,14 +138,15 @@ public class AddcourseActivity extends AppCompatActivity {
             }
 
         } else {
-            Log.d(TAG, "onCreate: NOW IN ADD MODE");
+            getTermList();
             mMode = AddOrEdit.ADD;
             toolbar.setTitle("Add a Course");
-            termSP.setSelection(0);
-            statusSP.setSelection(0);
+            statusSP.setSelection(0, true);
             mStatus = statusSP.getSelectedItem().toString();
             startDate = setDefaultDate;
             endDate = setDefaultDate;
+            termArrayListAA.notifyDataSetChanged();
+            termSP.setSelection(1, true);
         }
 
         statusSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -169,7 +172,7 @@ public class AddcourseActivity extends AppCompatActivity {
                 mTerm = termSP.getSelectedItem().toString();
             }
         });
-        startDate = mStart;
+
         startCal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -177,7 +180,7 @@ public class AddcourseActivity extends AppCompatActivity {
 
             }
         });
-        endDate = mEnd;
+
         endCal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -317,10 +320,13 @@ public class AddcourseActivity extends AppCompatActivity {
         }
         if (getIntent().hasExtra("start")){
             mStart = getIntent().getStringExtra("start");
-
+        } else {
+            mStart = "5/27/2019";
         }
         if (getIntent().hasExtra("end")){
             mEnd = getIntent().getStringExtra("end");
+        } else {
+            mStart = "5/27/2019";
         }
         if (getIntent().hasExtra("status")){
             mStatus = getIntent().getStringExtra("status");
@@ -391,28 +397,31 @@ public class AddcourseActivity extends AppCompatActivity {
 
     }
 
-    private void getTermSelection(){
-        term1 = "Term 1";
-        term2 = "Term 2";
-        term3 = "Term 3";
-        term4 = "Term 4";
-        if (term1.equals(mTerm)) {
-            termSP.setSelection(0);
+    public void getTermList(){
+        String query = "SELECT Title FROM Terms;";
+        AppDatabase db = AppDatabase.getInstance(this);
+        int position = 0;
+        mCursor = db.getReadableDatabase().rawQuery(query, null);
 
-        } else if (term2.equals(mTerm)) {
-            termSP.setSelection(1);
+        if (mCursor.getCount() > 0 ){
+            mCursor.moveToFirst();
+            do{
+                termArrayList.add(mCursor.getString(mCursor.getColumnIndex(TermsContract.Columns.TERMS_TITLE)));
+                Log.d(TAG, "getTermList: TERM TITLES: " + mCursor.getString(mCursor.getColumnIndex(TermsContract.Columns.TERMS_TITLE)));
+                if (mCursor.getString(mCursor.getColumnIndex(TermsContract.Columns.TERMS_TITLE)).equals(mTerm)){
+                    termSP.setSelection(position);
 
-        } else if (term3.equals(mTerm)) {
-            termSP.setSelection(2);
+                }
 
-        } else if (term4.equals(mTerm)) {
-            termSP.setSelection(3);
+                position ++;
+            } while (mCursor.moveToNext());
 
-        } else {
-            termSP.setSelection(0);
+            mCursor.close();
         }
 
     }
+
+
 
 
 }

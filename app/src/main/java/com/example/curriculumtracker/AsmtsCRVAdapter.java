@@ -43,17 +43,14 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
     public void onBindViewHolder(final AsmtViewHolder holder, final int position) {
         holder.editBtn.setVisibility(View.GONE);
         holder.deleteBtn.setVisibility(View.GONE);
-        holder.shareBtn.setVisibility(View.GONE);
+
         holder.staticCourseTV.setVisibility(View.GONE);
         holder.courseTV.setVisibility(View.GONE);
-        holder.title.setText("Assessment Title");
-        holder.staticDate.setText("Assessment Date");
-        holder.staticType.setText("Assessment Type");
+       holder.date.setVisibility(View.GONE);
 
         if ((mCursor == null) || (mCursor.getCount() == 0)){
-            holder.title.setText("Assessment Title");
-            holder.staticDate.setText("Assessment Date");
-            holder.staticType.setText("Assessment Type");
+            holder.title.setText("Nothing Here. Add an assessment using the button below.");
+
         } else {
             if (!mCursor.moveToPosition(position)){
                 throw new IllegalArgumentException("could not move cursor into position");
@@ -64,6 +61,16 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
             } catch (Exception e){
                 e.printStackTrace();
             }
+
+            holder.staticType.setVisibility(View.VISIBLE);
+            holder.staticDate.setVisibility(View.VISIBLE);
+            holder.staticCourseTV.setVisibility(View.VISIBLE);
+            holder.type.setVisibility(View.VISIBLE);
+            holder.date.setVisibility(View.VISIBLE);
+            holder.courseTV.setVisibility(View.VISIBLE);
+            holder.title.setText("Assessment Title");
+            holder.staticDate.setText("Assessment Date:");
+            holder.staticType.setText("Assessment Type:");
             try {
                 holder.type.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TYPE)));
                 holder.title.setText(mCursor.getString(mCursor.getColumnIndex(AssessmentsContract.Columns.ASMTS_TITLE)));
@@ -152,7 +159,7 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
             this.editBtn = itemView.findViewById(R.id.layout_asmntitem_buttonedit);
             this.type = itemView.findViewById(R.id.layout_assesmentitem_typeTV);
             this.parentLayout = itemView.findViewById(R.id.layout_asmtitem_CL);
-            this.shareBtn = itemView.findViewById(R.id.layout_assessmentitem_sharebutton);
+
             this.staticCourseTV = itemView.findViewById(R.id.layout_asmtitem_staticcourseTV);
             this.courseTV = itemView.findViewById(R.id.layout_asmtitem_courseTV);
         }

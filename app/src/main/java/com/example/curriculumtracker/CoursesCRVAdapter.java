@@ -68,6 +68,8 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
             holder.endText.setVisibility(View.GONE);
             holder.endTitle.setVisibility(View.GONE);
             holder.startTitle.setVisibility(View.GONE);
+            holder.statusTitle.setVisibility(View.GONE);
+            holder.status.setVisibility(View.GONE);
 
         } else {
             Log.d(TAG, "onBindViewHolder: MCURSOR VALUES: " + mCursor.getCount());
@@ -80,6 +82,8 @@ public class CoursesCRVAdapter extends RecyclerView.Adapter<CoursesCRVAdapter.Co
             holder.endText.setVisibility(View.VISIBLE);
             holder.endTitle.setVisibility(View.VISIBLE);
             holder.startTitle.setVisibility(View.VISIBLE);
+            holder.statusTitle.setVisibility(View.VISIBLE);
+            holder.status.setVisibility(View.VISIBLE);
 
             holder.startText.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_START)));
             holder.endText.setText(mCursor.getString(mCursor.getColumnIndex(CoursesContract.Columns.COURSE_END)));

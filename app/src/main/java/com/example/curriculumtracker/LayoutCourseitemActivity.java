@@ -24,6 +24,7 @@ public class LayoutCourseitemActivity extends AppCompatActivity {
     private ConstraintLayout layout;
     private ImageButton edit;
     private ImageButton delete;
+    private ImageButton share;
     private TextView start;
     private TextView end;
     private TextView note;
@@ -64,6 +65,7 @@ public class LayoutCourseitemActivity extends AppCompatActivity {
         secondMentNameTV = findViewById(R.id.layout_courseitem_mentName2);
         secondMentPhoneTV = findViewById(R.id.layout_courseitem_mentPhone2);
         secondMentEmailTV = findViewById(R.id.layout_courseitem_mentEmail2);
+        share = findViewById(R.id.layout_courseitem_sharebutton);
 
         getIncomingIntent();
 
@@ -171,6 +173,14 @@ public class LayoutCourseitemActivity extends AppCompatActivity {
                     "Please delete the associated assessments before proceeding", Toast.LENGTH_LONG).show();
         }
         backToCourseList(v);
+    }
+    public void shareNoteItem(View v) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Title: " + title.getText());
+        intent.putExtra(Intent.EXTRA_TEXT, ("Notes: " + note.getText()));
+
+        startActivity(Intent.createChooser(intent, "Share using"));
     }
 
     public void getCourseList(){

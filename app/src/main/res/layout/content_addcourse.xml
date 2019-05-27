@@ -312,6 +312,7 @@
                 android:id="@+id/content_addcourse_mentPhone2"
                 android:layout_width="212dp"
                 android:layout_height="wrap_content"
+                android:inputType="phone"
                 app:layout_constraintBaseline_toBaselineOf="@+id/content_addcourse_staticmentPhone2"
                 app:layout_constraintStart_toStartOf="@id/content_addcourse_mentName2" />
 
