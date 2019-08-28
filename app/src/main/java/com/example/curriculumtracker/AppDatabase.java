@@ -34,7 +34,6 @@ public class AppDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "onCreate: starts");
-        Log.d(TAG, "onCreate: DOES THIS EVEN WORKKKKKK???????????");
         String termSQL;
 
         termSQL = "CREATE TABLE IF NOT EXISTS " + TermsContract.TERMS_TABLE_NAME + " ("

@@ -20,7 +20,7 @@ public class MyNewIntentService extends JobIntentService {
     protected void onHandleWork(Intent intent) {
         Notification.Builder builder = new Notification.Builder(this);
             builder.setContentTitle("New Intent Service");
-            builder.setContentText("This is the body");
+            builder.setContentText("text body");
             builder.setSmallIcon(R.drawable.ic_launcher_background);
 
         Intent notifyIntent = new Intent(this, MainActivity.class);

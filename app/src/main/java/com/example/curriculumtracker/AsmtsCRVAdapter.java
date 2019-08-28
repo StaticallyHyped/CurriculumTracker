@@ -21,15 +21,13 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
     public static final String TAG = "AsmtsCRVAdapter";
     private Cursor mCursor;
     private Context mContext;
-
     public ArrayList<String> courseArray;
-
 
     public AsmtsCRVAdapter(Cursor cursor, Context context){
         this.mCursor = cursor;
         this.mContext = context;
-
     }
+
     @NonNull
     @Override
     public AsmtViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -43,7 +41,6 @@ public class AsmtsCRVAdapter extends RecyclerView.Adapter<AsmtsCRVAdapter.AsmtVi
     public void onBindViewHolder(final AsmtViewHolder holder, final int position) {
         holder.editBtn.setVisibility(View.GONE);
         holder.deleteBtn.setVisibility(View.GONE);
-
         holder.staticCourseTV.setVisibility(View.GONE);
         holder.courseTV.setVisibility(View.GONE);
        holder.date.setVisibility(View.GONE);

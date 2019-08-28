@@ -142,7 +142,6 @@ public class AddAsmtActivity extends AppCompatActivity {
             }
         });
 
-
         cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {

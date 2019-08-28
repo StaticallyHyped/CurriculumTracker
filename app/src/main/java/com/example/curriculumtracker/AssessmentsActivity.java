@@ -16,11 +16,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class AssessmentsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String TAG = "AssessmentsActivity";
     public static final int LOADER_ID = 0;
+    public Cursor mCursor;
 
     private AsmtsCRVAdapter mAdapter;
 
@@ -38,7 +40,6 @@ public class AssessmentsActivity extends AppCompatActivity implements LoaderMana
         LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
 
     }
-
 
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -73,7 +74,6 @@ public class AssessmentsActivity extends AppCompatActivity implements LoaderMana
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle bundle) {
-
         Log.d(TAG, "onCreateLoader: starts");
         String [] projection = {AssessmentsContract.Columns._ID, AssessmentsContract.Columns.ASMTS_TITLE, AssessmentsContract.Columns.ASMTS_TYPE,
         AssessmentsContract.Columns.ASMTS_DATE, AssessmentsContract.Columns.ASMTS_COURSE};
@@ -104,7 +104,24 @@ public class AssessmentsActivity extends AppCompatActivity implements LoaderMana
         Log.d(TAG, "onLoaderReset: starts");
     }
 
+    public void hasCourses(){
+
+
+    }
+
     public void goToAddAsmts(View view){
-        startActivity(new Intent(AssessmentsActivity.this, AddAsmtActivity.class));
+        int position = 0;
+        String query = "SELECT Title FROM Courses;";
+        AppDatabase db = AppDatabase.getInstance(this);
+
+        mCursor = db.getReadableDatabase().rawQuery(query, null);
+        //int id[] = new int[mCursor.getCount()];
+        if (mCursor.getCount() != 0 ){
+            startActivity(new Intent(AssessmentsActivity.this, AddAsmtActivity.class));
+            mCursor.close();
+        } else {
+            Toast.makeText(this, "An assessment needs to be added to a course. Please create a new course first", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

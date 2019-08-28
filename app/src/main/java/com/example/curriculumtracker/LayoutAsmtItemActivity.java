@@ -31,8 +31,6 @@ public class LayoutAsmtItemActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_assessmentitem);
-        /*Toolbar toolbar = findViewById(R.id.layout_asmtitem_toolbar);
-        setSupportActionBar(toolbar);*/
 
         dueDate = findViewById(R.id.layout_assessmentitem_dateTV);
         title = findViewById(R.id.layout_asmntitem_title);

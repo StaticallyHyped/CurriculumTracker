@@ -78,7 +78,7 @@ CourseAlertCRVAdapter.OnCourseListener {
             Log.d(TAG, "onCreate: startDate is null");
         }
         createNotificationChannel();
-//TODO add functionality to .setText for Term asssociated with a course
+
     }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu, menu);

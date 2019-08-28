@@ -118,7 +118,6 @@ AsmtAlertCRVAdapter.OnAsmtListener{
         }
     }
 
-
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
 
